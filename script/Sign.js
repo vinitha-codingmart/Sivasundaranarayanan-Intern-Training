@@ -32,7 +32,7 @@ var signup = () => {
     validate();
     if (!(mailError || passError || cpassError || error)) {
         createAcc();
-        openTab(1,0);
+        openTab(1, 0);
     }
 }
 
@@ -93,8 +93,9 @@ var clear = () => {
 
 var signin = () => {
     validate();
-    if (!error)
+    if (!error) {
         login();
+    }
 }
 
 var login = () => {
@@ -118,9 +119,13 @@ let isIdPresent = (mail, data) => {
         Object.keys(data).forEach((key) => {
             if (key == mail) {
                 cmd = true;
+                document.getElementById("in_error").classList.remove("show");
                 return;
             }
         })
+
+    document.getElementById("in_error").innerHTML = "Invalid Username or Password"
+    document.getElementById("in_error").classList.add("show");
     return cmd;
 }
 
