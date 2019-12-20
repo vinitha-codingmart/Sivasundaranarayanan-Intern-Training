@@ -1250,6 +1250,7 @@ ul {
     /* .popular-cards-item {
         margin-left: 0;
     } */
+    
     .popular-content {
         margin-right: 0;
     }
@@ -1299,7 +1300,8 @@ ul {
         margin-left: 0;
         align-items: center;
     }
-    .nanodegree-content-description {
+    .nanodegree-content-description,.nanodegree-content-title {
+        width: auto;
         text-align: left;
     }
     .discover-item {
@@ -1341,8 +1343,8 @@ ul {
         height: 30rem;
     }
 
-    .explore-wrapper,.promo-wrapper,.popular-wrapper {
-        padding-left: 2rem;
+    .explore-wrapper,.promo-wrapper,.popular-wrapper,.programs-wrapper {
+        padding-left: 1rem;
     }
 
     .stories-comments {
@@ -1365,5 +1367,9 @@ ul {
     }
     .hero-content .search-box input[type=text] {
         width: 90%;
+    }
+
+    .popular-cards-item{
+        margin-left: 0;
     }
 }
