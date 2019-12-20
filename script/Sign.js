@@ -1,6 +1,7 @@
 var mKey;
 
 var mailError = false, passError = false, cpassError = false;
+var error = false;
 
 window.onload = initiate = () => {
     mKey = "log_details";
@@ -28,8 +29,11 @@ var openTab = (from, to) => {
 }
 
 var signup = () => {
-    if (validate())
+    validate();
+    if (!(mailError || passError || cpassError || error)) {
         createAcc();
+        openTab(1,0);
+    }
 }
 
 let validate = () => {
@@ -42,8 +46,10 @@ let validate = () => {
         if (mail.value == "" || pass.value == "") {
             document.getElementById("in_error").innerHTML = "Enter Email ID and Password"
             document.getElementById("in_error").classList.add("show");
+            error = true;
         } else {
             document.getElementById("in_error").classList.remove("show");
+            error = false;;
         }
 
     } else {
@@ -56,10 +62,12 @@ let validate = () => {
         if (mail.value == "" || fname.value == "" || lname.value == "" || pass.value == "" || cpass.value == "") {
             document.getElementById("up_error").innerHTML = "Enter all the details"
             document.getElementById("up_error").classList.add("show");
+            error = true;
         } else {
             document.getElementById("up_error").classList.remove("show");
+            error = false;
         }
-    } 
+    }
 }
 
 let createAcc = () => {
@@ -84,9 +92,9 @@ var clear = () => {
 }
 
 var signin = () => {
-    if (validate()) {
+    validate();
+    if (!error)
         login();
-    }
 }
 
 var login = () => {
