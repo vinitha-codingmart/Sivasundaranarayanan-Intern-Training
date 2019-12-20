@@ -1,5 +1,7 @@
 var mKey;
 
+var mailError = false, passError = false, cpassError = false;
+
 window.onload = initiate = () => {
     mKey = "log_details";
     console.log(mKey);
@@ -31,15 +33,33 @@ var signup = () => {
 }
 
 let validate = () => {
+    let mail, pass, fname, lname, cpass;
     let current = document.getElementsByClassName("show");
     if (current[0].id == "Signin") {
-        let mail = document.getElementById('in_mail');
-        let pass = document.getElementById('in_pass');
-        if (mail.value != null)
-            alert('Enter the mail');
-    } else {
+        mail = document.getElementById('in_mail');
+        pass = document.getElementById('in_pass');
 
-    }
+        if (mail.value == "" || pass.value == "") {
+            document.getElementById("in_error").innerHTML = "Enter Email ID and Password"
+            document.getElementById("in_error").classList.add("show");
+        } else {
+            document.getElementById("in_error").classList.remove("show");
+        }
+
+    } else {
+        mail = document.getElementById('up_mail');
+        fname = document.getElementById('up_fname');
+        lname = document.getElementById('up_lname');
+        pass = document.getElementById('up_pass');
+        cpass = document.getElementById('up_cpass');
+
+        if (mail.value == "" || fname.value == "" || lname.value == "" || pass.value == "" || cpass.value == "") {
+            document.getElementById("up_error").innerHTML = "Enter all the details"
+            document.getElementById("up_error").classList.add("show");
+        } else {
+            document.getElementById("up_error").classList.remove("show");
+        }
+    } 
 }
 
 let createAcc = () => {
@@ -64,7 +84,7 @@ var clear = () => {
 }
 
 var signin = () => {
-    if(validate()) {
+    if (validate()) {
         login();
     }
 }
@@ -100,4 +120,40 @@ var addUser = (json, data, key) => {
     json.users[key] = data;
     json = JSON.stringify(json);
     localStorage.setItem(mKey, json);
+}
+
+var validateMail = () => {
+    let mail = document.getElementById("up_mail").value;
+    if (!mail.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+        document.getElementById("up_mail_error").classList.add("show");
+        mailError = true;
+    }
+    else {
+        document.getElementById("up_mail_error").classList.remove("show");
+        mailError = false;
+    }
+}
+
+var validatePass = () => {
+    let pass = document.getElementById("up_pass").value;
+    if (!pass.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&/])(?=.{8,})/)) {
+        document.getElementById("up_pass_error").classList.add("show");
+        passError = true;
+    } else {
+        document.getElementById("up_pass_error").classList.remove("show");
+        passError = false;
+    }
+    validateCPass();
+}
+
+var validateCPass = () => {
+    if (document.getElementById("up_cpass").value != "") {
+        if (document.getElementById("up_pass").value != document.getElementById("up_cpass").value) {
+            document.getElementById("up_cpass_error").classList.add("show");
+            cpassError = true;
+            return;
+        }
+    }
+    document.getElementById("up_cpass_error").classList.remove("show");
+    cpassError = false;
 }

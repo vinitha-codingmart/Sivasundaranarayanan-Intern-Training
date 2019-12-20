@@ -7,6 +7,7 @@
     <title>Sign In - Udacity</title>
 
     <link rel="stylesheet" type="text/css" href="style/Sign.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -42,6 +43,7 @@
                             </div>
                         </div>
                         <div class="Sign-content">
+                            <div id="in_error" class="error">Specify an email and password</div>
                             <input id="in_mail" type="text" placeholder="Email Address">
                             <input id="in_pass" type="password" placeholder="Password">
                             <p>By clicking Sign In, you agree to our <a href="">Terms of Use</a> and our <a
@@ -58,15 +60,25 @@
                             </div>
                         </div>
                         <div class="Sign-content">
+                            <div id="up_error" class="error"></div>
                             <div class="Sign-cText">
                                 <input id="up_fname" type="text" style="margin-right:.5rem" placeholder="First Name">
                                 <input id="up_lname" type="text" style="margin-left:.5rem" placeholder="Last Name">
                             </div>
-                            <input id="up_mail" type="text" placeholder="Email Address">
+                            <input id="up_mail" oninput="validateMail()" type="text" placeholder="Email Address">
+                            <div class="text_error" id="up_mail_error">Enter valid mail ID</div>
                             <div class="Sign-cText">
-                                <input id="up_pass" type="password" style="margin-right:.5rem" placeholder="Password">
-                                <input id="up_cpass" type="password" style="margin-left:.5rem" placeholder="Confirm Password">
+                                <div style="margin-right:.5rem; width: 100%;">
+                                    <input id="up_pass" oninput="validatePass()" type="password" placeholder="Password">
+                                    <div class="text_error" id="up_pass_error">Enter a strong password</div>
+                                </div>
+                                <div style="margin-left:.5rem;  width: 100%;">
+                                    <input id="up_cpass" oninput="validateCPass()" type="password"
+                                        placeholder="Confirm Password">
+                                    <div class="text_error" id="up_cpass_error">Doesn't match with password</div>
+                                </div>
                             </div>
+
                             <p>By clicking Sign Up, you agree to our <a href="">Terms of Use</a> and our <a
                                     href="">Privacy Policy</a>.</p>
                             <input type="button" onclick="signup()" value="Sign Up">
