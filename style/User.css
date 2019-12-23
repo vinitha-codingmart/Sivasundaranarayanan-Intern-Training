@@ -1,0 +1,255 @@
+* {
+    padding: 0;
+    margin: 0;
+    line-height: 1.33333em;
+    font-family: Open Sans, Helvetica, sans-serif;
+    list-style: none;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+}
+
+.main {
+    width: 100%;
+}
+
+.side-wrapper {
+    top: 0;
+    position: sticky;
+    height: 100%;
+    width: 16rem;
+    background: #1f2932;
+    transition: all 5s;
+    display: block;
+}
+
+.side-nav {
+    margin-right: 2rem;
+}
+
+.side-header {
+    width: 100%;
+    display: block;
+}
+
+.side-header svg {
+    margin: 1rem;
+}
+
+.side-contents {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1 1 100%;
+}
+
+.side-list {
+    display: block;
+}
+
+.side-list-item a {
+    padding: .5rem .75rem;
+    display: flex;
+    align-items: center;
+    color: #dbe2e8;
+}
+
+.side-list-item {
+    text-align: center;
+}
+
+.side-list svg {
+    fill: currentColor;
+    margin-right: 1rem;
+    text-align: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    box-sizing: border-box;
+    display: block;
+}
+
+.side-list svg path {
+    box-sizing: border-box;
+}
+
+.side-list span {
+    z-index: -1;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.header {
+    background-color: #fff;
+    box-shadow: 0 0 40px rgba(0, 0, 0, .2);
+    left: 0;
+    top: 0;
+    height: 57px;
+    width: 100%;
+    display: block;
+    position: sticky;
+    z-index: 3;
+}
+
+.header-wrapper {
+    height: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 0 0 0 0 #dbe2e8, 0 2px 1px 0 rgba(47, 61, 73, .05);
+}
+
+.mob-bar-toggler {
+    display: none;
+    position: relative;
+    float: left;
+    margin-right: 1.69491525%;
+    width: 15.25423729%;
+}
+
+.header-navbar-toogler {
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    height: .188rem;
+    width: 100%;
+    background: #02b3e4;
+    margin-top: .188rem;
+    -webkit-user-select: none;
+}
+
+.title {
+    margin: 0 1rem;
+}
+
+.body {
+    box-sizing: border-box;
+    max-width: 1024px;
+    padding: 0 2rem;
+    padding-top: 0px;
+    padding-right: 2rem;
+    padding-bottom: 0px;
+    padding-left: 2rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.body-title {
+    font-size: 2.5rem;
+    font-weight: lighter;
+    color: #2e3d49;
+    margin-bottom: 1.5rem;
+}
+
+.body-subtitle {
+    font-size: 1rem;
+    line-height: 1.75rem;
+    padding-bottom: 1rem;
+    max-width: 40rem;
+    font-weight: 100;
+    color: #2e3d49
+}
+
+.body h3 {
+    text-transform: uppercase;
+    font-size: .8125rem;
+    letter-spacing: 1.5px;
+    line-height: 1.5rem;
+    max-width: 40rem;
+}
+
+.main ol li {
+    border-radius: .5rem;
+    box-shadow: 0 0 8px 0 rgba(17, 22, 26, .16), 0 4px 8px 0 rgba(17, 22, 26, .08), 0 8px 16px 0 rgba(17, 22, 26, .08);
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.card-wrapper {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    user-select: none;
+    transition: box-shadow .5s;
+}
+
+.card-wrapper:hover {
+    box-shadow: 0 4px 16px 4px rgba(17, 22, 26, .16), 0 4px 8px 0 rgba(17, 22, 26, .08), 0 16px 24px 0 rgba(17, 22, 26, .08);
+}
+
+.card-header {
+    padding: 1.5rem 2rem .5rem;
+    line-height: 2rem;
+}
+
+.card-header svg {
+    height: 2.5rem;
+    width: 2.5rem;
+    fill: #02b3e4!important;
+    display: inline-block;
+}
+
+.card-header h3 {
+    display: flex;
+    align-items: center;
+}
+
+.card-header h4 {
+    line-height: 2rem;
+    font-size: 1.125rem;
+    color: #2e3d49;
+}
+
+.card-summary {
+    padding: 0 2rem 1.5rem;
+}
+
+.card-summary p {
+    font-size: 1rem;
+    line-height: 1.75rem;
+    padding-bottom: 1rem;
+    color: #58646d;
+    ;
+}
+
+.card-action {
+    width: 35%;
+    min-width: 15rem;
+    position: relative;
+    display: block;
+}
+
+.card-action button {
+    cursor: pointer;
+    user-select: none;
+    display: block;
+    margin: 0 3rem 0 auto;
+    top: 50%;
+    transform: translateY(-50%) translateX(1rem);
+    z-index: 2;
+    position: relative;
+    color: #02b3e4;
+    height: 3rem;
+    padding: 0 2rem;
+    border: none;
+    background: none;
+    text-align: center;
+}
+
+@media only screen and (max-width: 900px) {
+    .side-wrapper {
+        width: 0;
+    }
+
+    .mob-bar-toggler {
+        display: block;
+    }
+}

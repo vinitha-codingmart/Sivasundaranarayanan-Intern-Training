@@ -1,16 +1,21 @@
-var mKey;
+var mKey, sKey;
 
 var mailError = false, passError = false, cpassError = false;
 var error = false;
 
 window.onload = initiate = () => {
     mKey = "log_details";
-    console.log(mKey);
-    let json = JSON.parse(localStorage.getItem(mKey));
-    if (!json) {
-        json = new Object();
-        json.users = new Object();
-        localStorage.setItem(mKey, JSON.stringify(json));
+    sKey = "session_details";
+
+    let logJson = JSON.parse(localStorage.getItem(mKey));
+    let sesJson = localStorage.getItem(sKey);
+    if (!logJson) {
+        logJson = new Object();
+        logJson.users = new Object();
+        localStorage.setItem(mKey, JSON.stringify(logJson));
+    }
+    if (!sesJson) {
+        sesJson = new Object();
     }
 };
 
@@ -31,8 +36,7 @@ var openTab = (from, to) => {
 var signup = () => {
     validate();
     if (!(mailError || passError || cpassError || error)) {
-        createAcc();
-        openTab(1, 0);
+        if (createAcc()) openTab(1, 0);
     }
 }
 
@@ -77,11 +81,9 @@ let createAcc = () => {
     data.name = document.getElementById("up_fname").value + ' ' + document.getElementById("up_lname").value;
     data.pass = document.getElementById("up_pass").value;
     let mail = document.getElementById("up_mail").value;
-    if (json) {
-        if (isIdPresent(mail, json.users)) {
-            alert("You're already our student");
-            return;
-        }
+    if (isIdPresent(mail, json.users)) {
+        alert("You're already our student");
+        return false;
     }
     addUser(json, data, mail);
     clear();
@@ -106,9 +108,15 @@ var login = () => {
     if (json) {
         if (isIdPresent(mail, json.users)) {
             if (json.users[mail].pass == pass) {
-                alert("Hi " + json.users[mail].name);
+                addUserToLocal(json.users[mail].name);
+                document.getElementById("in_error").classList.remove("show");
+                window.location.href="../User.html";
+                return;
             }
         }
+        document.getElementById("in_error").innerHTML = "Invalid Username or Password"
+        document.getElementById("in_pass").value = "";
+        document.getElementById("in_error").classList.add("show");
     }
 
 }
@@ -119,15 +127,16 @@ let isIdPresent = (mail, data) => {
         Object.keys(data).forEach((key) => {
             if (key == mail) {
                 cmd = true;
-                document.getElementById("in_error").classList.remove("show");
                 return;
             }
         })
-
-    document.getElementById("in_error").innerHTML = "Invalid Username or Password"
-    document.getElementById("in_error").classList.add("show");
     return cmd;
 }
+
+var addUserToLocal = (id) => {
+    localStorage.setItem(sKey, id);
+    return;
+};
 
 var addUser = (json, data, key) => {
     json.users[key] = data;
