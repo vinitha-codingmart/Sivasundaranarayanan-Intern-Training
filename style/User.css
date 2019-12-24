@@ -27,6 +27,7 @@ body {
 
 .side-nav {
     margin-right: 2rem;
+    overflow: hidden;
 }
 
 .side-header {
