@@ -36,7 +36,7 @@ var openTab = (from, to) => {
 var signup = () => {
     validate();
     if (!(mailError || passError || cpassError || error)) {
-        if (createAcc()) openTab(1, 0);
+        if (createAcc()) window.location.href="./User.html";
     }
 }
 
@@ -87,6 +87,7 @@ let createAcc = () => {
     }
     addUser(json, data, mail);
     clear();
+    return true;
 }
 
 var clear = () => {
@@ -110,7 +111,7 @@ var login = () => {
             if (json.users[mail].pass == pass) {
                 addUserToLocal(json.users[mail].name);
                 document.getElementById("in_error").classList.remove("show");
-                window.location.href="../User.html";
+                window.location.href="./User.html";
                 return;
             }
         }

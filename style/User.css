@@ -52,14 +52,20 @@ body {
 }
 
 .side-list-item a {
+    user-select: none;
+    cursor: pointer;
     padding: .5rem .75rem;
     display: flex;
     align-items: center;
-    color: #dbe2e8;
+    color: #b6cee0;
 }
 
 .side-list-item {
     text-align: center;
+}
+
+.side-list-item a:hover {
+    color: #fff;
 }
 
 .side-list svg {
@@ -328,7 +334,7 @@ body {
 .volumebar::-webkit-slider-thumb {
     appearance: none;
     -webkit-appearance: none;
-    width: 10px;
+    width: 0px;
     height: 10px;
     background-color: #64aff5 ;
 }
