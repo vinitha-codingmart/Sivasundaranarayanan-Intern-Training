@@ -3,19 +3,21 @@ var mKey, sKey;
 var mailError = false, passError = false, cpassError = false;
 var error = false;
 
-window.onload = initiate = () => {
+window.onload = () => {
     mKey = "log_details";
     sKey = "session_details";
 
     let logJson = JSON.parse(localStorage.getItem(mKey));
     let sesJson = localStorage.getItem(sKey);
+
+
+    if (!sesJson) sesJson = new Object();
+    else window.location.replace('./User.html');
+
     if (!logJson) {
         logJson = new Object();
         logJson.users = new Object();
         localStorage.setItem(mKey, JSON.stringify(logJson));
-    }
-    if (!sesJson) {
-        sesJson = new Object();
     }
 };
 
@@ -36,7 +38,7 @@ var openTab = (from, to) => {
 var signup = () => {
     validate();
     if (!(mailError || passError || cpassError || error)) {
-        if (createAcc()) window.location.href="./User.html";
+        if (createAcc()) window.location.href = "./User.html";
     }
 }
 
@@ -111,7 +113,7 @@ var login = () => {
             if (json.users[mail].pass == pass) {
                 addUserToLocal(json.users[mail].name);
                 document.getElementById("in_error").classList.remove("show");
-                window.location.href="./User.html";
+                window.location.href = "./User.html";
                 return;
             }
         }
