@@ -196,15 +196,19 @@ header {
     width: 6.5rem;
 }
 
-.button-navigation span {
+.button-navigation a {
+    color: #212121;
     font-size: 16px;
+}
+
+.signin a {
+    color: #ffffff;
 }
 
 .signin {
     letter-spacing: .094rem;
     font-size: .8125rem;
     text-align: center;
-    color: #ffffff;
     background: var(--color-primary);
     padding: 0 10px;
     font-weight: 600;
@@ -341,7 +345,48 @@ ul {
     z-index: 2147483000;
     bottom: 20px;
     right: 20px;
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.show {
+    display: block;
+}
+
+.intercom-chat {
+    position: relative;
+    transition: all ease-in 1s;
+    display: none;
+    box-shadow: -8px 3px 20px 16px rgba(46, 61, 73, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    width: 376px;
+    height: 517px;
+    margin: 10px;
+}
+
+.intercom-header {
+    padding: 24px 51px 87px 40px;
+    background-color: rgb(36, 177, 237);
+    background-image: url("../src/background-14.30924b67.png");
+    background-position: center;
+    background-size: cover;
+    min-height: 75px;
+    z-index: 101;
+}
+
+.intercom-header h1 {
+    font-size: 32px;
+    color: #ffffff;
+    font-weight: 100;
+}
+
+.intercom-content {
+    display: block;
+    height: 100%;
+    z-index: 100;
+    background-color: #ffffff;
 }
 
 .intercom-layout {
@@ -350,15 +395,45 @@ ul {
     width: 60px;
     border-radius: 50%;
     background: #02B3E4;
+    cursor: pointer;
 }
 
 .intercom-button {
-    top: 12%;
-    left: 12%;
-    margin: 8px;
+    margin: 15px;
     position: absolute;
     transition: all .5s ease;
     -webkit-transition: all .3s ease;
+}
+
+.intercom-cards {
+    height: 100%;
+    transform: translateY(-207px);
+    padding: 143px 16px 0px 16px;
+}
+
+.intercom-card {
+    padding: 26px 24px 24px 24px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px 2px rgba(0,0,0,0.25);
+}
+
+.intercom-card-heading h2 {
+    line-height: 1.5;
+    font-size: 16px;
+    word-break: break-word;
+    flex: 1 1 0%;
+}
+
+.intercom-card-image-wrapper {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 36px;
+    height: 36px;
+}
+
+.intercom-card-image-wrapper img {
+    width: inherit;
 }
 
 .chat {
@@ -1236,20 +1311,16 @@ ul {
 }
 
 @media screen and (max-width: 769px) {
-
     .promo-banner-image {
         border-radius: 8px;
     }
-
-    .explore-wrapper,.promo-wrapper,.popular-wrapper {
+    .explore-wrapper, .promo-wrapper, .popular-wrapper {
         padding-left: 1rem !important;
         padding-right: 1rem !important;
-    } 
-
+    }
     /* .popular-cards-item {
         margin-left: 0;
     } */
-    
     .popular-content {
         margin-right: 0;
     }
@@ -1299,7 +1370,7 @@ ul {
         margin-left: 0;
         align-items: center;
     }
-    .nanodegree-content-description,.nanodegree-content-title {
+    .nanodegree-content-description, .nanodegree-content-title {
         width: auto;
         text-align: left;
     }
@@ -1341,11 +1412,9 @@ ul {
         width: 100%;
         height: 30rem;
     }
-
-    .explore-wrapper,.promo-wrapper,.popular-wrapper,.programs-wrapper {
+    .explore-wrapper, .promo-wrapper, .popular-wrapper, .programs-wrapper {
         padding-left: 1rem;
     }
-
     .stories-comments {
         align-items: center;
         justify-content: center;
@@ -1367,8 +1436,7 @@ ul {
     .hero-content .search-box input[type=text] {
         width: 90%;
     }
-
-    .popular-cards-item{
+    .popular-cards-item {
         margin-left: 0;
     }
 }

@@ -3,7 +3,7 @@ var mKey, sKey;
 var mailError = false, passError = false, cpassError = false;
 var error = false;
 
-window.onload = () => {
+signLoad = () => {
     mKey = "log_details";
     sKey = "session_details";
 
@@ -12,7 +12,7 @@ window.onload = () => {
 
 
     if (!sesJson) sesJson = new Object();
-    else window.location.replace('./User.html');
+    else window.location = './User.html';
 
     if (!logJson) {
         logJson = new Object();
@@ -22,7 +22,7 @@ window.onload = () => {
 };
 
 var openTab = (from, to) => {
-    let btns = document.getElementsByTagName("button");
+    let btns = document.getElementsByClassName('sign');
     if (to) {
         document.getElementById('Signup').classList.add('show');
         document.getElementById('Signin').classList.remove('show');
@@ -38,7 +38,7 @@ var openTab = (from, to) => {
 var signup = () => {
     validate();
     if (!(mailError || passError || cpassError || error)) {
-        if (createAcc()) window.location.href = "./User.html";
+        if (createAcc()) { window.location = "./User.html" };
     }
 }
 
@@ -89,6 +89,7 @@ let createAcc = () => {
     }
     addUser(json, data, mail);
     clear();
+    addUserToLocal(mail);
     return true;
 }
 
@@ -117,10 +118,10 @@ var login = () => {
                 return;
             }
         }
-        document.getElementById("in_error").innerHTML = "Invalid Username or Password"
-        document.getElementById("in_pass").value = "";
-        document.getElementById("in_error").classList.add("show");
     }
+    document.getElementById("in_error").innerHTML = "Invalid Username or Password"
+    document.getElementById("in_pass").value = "";
+    document.getElementById("in_error").classList.add("show");
 
 }
 
