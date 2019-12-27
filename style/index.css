@@ -415,7 +415,7 @@ ul {
     padding: 26px 24px 24px 24px;
     background-color: #fff;
     border-radius: 5px;
-    box-shadow: 1px 1px 4px 2px rgba(0,0,0,0.25);
+    box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.25);
 }
 
 .intercom-card-heading h2 {
@@ -434,6 +434,20 @@ ul {
 
 .intercom-card-image-wrapper img {
     width: inherit;
+}
+
+.intercom-card-content- {
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    color: #696969
+}
+
+.intercom-card-message {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: rgb(0, 0, 0);
+    overflow: hidden;
 }
 
 .chat {
