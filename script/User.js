@@ -38,8 +38,7 @@ var openNav = () => {
 }
 
 var logout = () => {
-    localStorage.removeItem(sKey);
-    window.location.href = "./index.html";
+    logoutUser();
 }
 
 var openModal = (index) => {

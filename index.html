@@ -174,14 +174,16 @@
                                         <img src="https://static.intercomassets.com/avatars/765565/square_128/custom_avatar-1542173755.png?1542173755"
                                             alt="Carla profile">
                                     </div class="intercom-card-content">
-                                    <div style="width: 75%; margin-left:5%">
+                                    <div style="width: 75%; margin-left:5%      ">
                                         <div class="intercom-card-content-">
                                             <span>Carla</span>
-                                            <span style="display: flex; width: 100%; justify-content: flex-end;">2w ago</span>
+                                            <span style="display: flex; width: 100%; justify-content: flex-end;">2w
+                                                ago</span>
                                         </div>
                                         <div class="intercom-card-content-" style="color:black">
                                             <span>Carla: </span>
-                                            <p class="intercom-card-message">Hi there! We are here to answer any questions you have about Udacity. How
+                                            <p class="intercom-card-message">Hi there! We are here to answer any
+                                                questions you have about Udacity. How
                                                 can we help you?</p>
                                         </div>
                                     </div>
@@ -614,6 +616,31 @@
                 </div>
             </section>
 
+            <section class="bus">
+                <div class="bus-search-div">
+                    <form class="bus-search-wrap">
+                        <div class="bus-search-box">
+                            <div class="bus-search-input">
+                                <label for="bus-src">From</label>
+                                <input onfocus="fetchsrclocation()" oninput="fetchsrclocation()" id="bus-src" autocomplete="off" type="text">
+                            </div>
+                            <div id="city-list-src"></div>
+                        </div>
+                        <div class="bus-search-box">
+                            <div class="bus-search-input">
+                                <label for=" bus-dest">To</label>
+                                <input onfocus="fetchdestlocation()" oninput="fetchdestlocation()" id="bus-dest" autocomplete="off" type="text">
+                            </div>
+                            <div id="city-list-dest"></div>
+                        </div>
+
+                        <input id="bus-search" type="button" value="Search">
+                    </form>
+                    <div></div>
+
+                </div>
+            </section>
+
             <section class="promo">
                 <div class="promo-wrapper">
                     <div class="promo-banner">
@@ -722,9 +749,24 @@
 
     </div>
 
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+
+
+
+    <script src="script/firebase.js"></script>
     <script src="script/Sign.js"></script>
     <script src="script/index.js"></script>
     <script src="script/router.js"></script>
+
+
 </body>
 
 </html>

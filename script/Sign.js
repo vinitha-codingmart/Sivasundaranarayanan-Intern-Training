@@ -3,23 +3,23 @@ var mKey, sKey;
 var mailError = false, passError = false, cpassError = false;
 var error = false;
 
-signLoad = () => {
-    mKey = "log_details";
-    sKey = "session_details";
+// signLoad = () => {
+//     mKey = "log_details";
+//     sKey = "session_details";
 
-    let logJson = JSON.parse(localStorage.getItem(mKey));
-    let sesJson = localStorage.getItem(sKey);
+//     let logJson = JSON.parse(localStorage.getItem(mKey));
+//     let sesJson = localStorage.getItem(sKey);
 
 
-    if (!sesJson) sesJson = new Object();
-    else window.location = './User.html';
+//     if (!sesJson) sesJson = new Object();
+//     else window.location = './User.html';
 
-    if (!logJson) {
-        logJson = new Object();
-        logJson.users = new Object();
-        localStorage.setItem(mKey, JSON.stringify(logJson));
-    }
-};
+//     if (!logJson) {
+//         logJson = new Object();
+//         logJson.users = new Object();
+//         localStorage.setItem(mKey, JSON.stringify(logJson));
+//     }
+// };
 
 var openTab = (from, to) => {
     let btns = document.getElementsByClassName('sign');
@@ -38,7 +38,11 @@ var openTab = (from, to) => {
 var signup = () => {
     validate();
     if (!(mailError || passError || cpassError || error)) {
-        if (createAcc()) { window.location = "./User.html" };
+        let valid = createAcc(
+            document.getElementById('up_mail').value,
+            document.getElementById('up_pass').value,
+            document.getElementById('up_fname').value + " " + document.getElementById('up_lname').value)
+        if (valid) { window.location = "./User.html" };
     }
 }
 
@@ -76,22 +80,22 @@ let validate = () => {
     }
 }
 
-let createAcc = () => {
-    let store = localStorage;
-    let json = JSON.parse(store.getItem(mKey));
-    let data = new Object();
-    data.name = document.getElementById("up_fname").value + ' ' + document.getElementById("up_lname").value;
-    data.pass = document.getElementById("up_pass").value;
-    let mail = document.getElementById("up_mail").value;
-    if (isIdPresent(mail, json.users)) {
-        alert("You're already our student");
-        return false;
-    }
-    addUser(json, data, mail);
-    clear();
-    addUserToLocal(mail);
-    return true;
-}
+// let createAcc = () => {
+//     let store = localStorage;
+//     let json = JSON.parse(store.getItem(mKey));
+//     let data = new Object();
+//     data.name = document.getElementById("up_fname").value + ' ' + document.getElementById("up_lname").value;
+//     data.pass = document.getElementById("up_pass").value;
+//     let mail = document.getElementById("up_mail").value;
+//     if (isIdPresent(mail, json.users)) {
+//         alert("You're already our student");
+//         return false;
+//     }
+//     addUser(json, data, mail);
+//     clear();
+//     addUserToLocal(mail);
+//     return true;
+// }
 
 var clear = () => {
     document.getElementById("up_fname").value = document.getElementById("up_lname").value = document.getElementById("up_mail").value = document.getElementById("up_pass").value = document.getElementById("up_cpass").value = "";
@@ -100,53 +104,52 @@ var clear = () => {
 var signin = () => {
     validate();
     if (!error) {
-        login();
+        login(document.getElementById("in_mail").value, document.getElementById("in_pass").value);
     }
 }
 
-var login = () => {
-    let store = localStorage;
-    let json = JSON.parse(store.getItem(mKey));
-    let mail = document.getElementById("in_mail").value;
-    let pass = document.getElementById("in_pass").value;
-    if (json) {
-        if (isIdPresent(mail, json.users)) {
-            if (json.users[mail].pass == pass) {
-                addUserToLocal(json.users[mail].name);
-                document.getElementById("in_error").classList.remove("show");
-                window.location.href = "./User.html";
-                return;
-            }
-        }
-    }
-    document.getElementById("in_error").innerHTML = "Invalid Username or Password"
-    document.getElementById("in_pass").value = "";
-    document.getElementById("in_error").classList.add("show");
+// var login = () => {
+//     let store = localStorage;
+//     let json = JSON.parse(store.getItem(mKey));
+//     let mail = document.getElementById("in_mail").value;
+//     let pass = document.getElementById("in_pass").value;
+//     if (json) {
+//         if (isIdPresent(mail, json.users)) {
+//             if (json.users[mail].pass == pass) {
+//                 addUserToLocal(json.users[mail].name);
+//                 document.getElementById("in_error").classList.remove("show");
+//                 return;
+//             }
+//         }
+//     }
+//     document.getElementById("in_error").innerHTML = "Invalid Username or Password"
+//     document.getElementById("in_pass").value = "";
+//     document.getElementById("in_error").classList.add("show");
 
-}
+// }
 
-let isIdPresent = (mail, data) => {
-    let cmd = false;
-    if (data)
-        Object.keys(data).forEach((key) => {
-            if (key == mail) {
-                cmd = true;
-                return;
-            }
-        })
-    return cmd;
-}
+// let isIdPresent = (mail, data) => {
+//     let cmd = false;
+//     if (data)
+//         Object.keys(data).forEach((key) => {
+//             if (key == mail) {
+//                 cmd = true;
+//                 return;
+//             }
+//         })
+//     return cmd;
+// }
 
-var addUserToLocal = (id) => {
-    localStorage.setItem(sKey, id);
-    return;
-};
+// var addUserToLocal = (id) => {
+//     localStorage.setItem(sKey, id);
+//     return;
+// };
 
-var addUser = (json, data, key) => {
-    json.users[key] = data;
-    json = JSON.stringify(json);
-    localStorage.setItem(mKey, json);
-}
+// var addUser = (json, data, key) => {
+//     json.users[key] = data;
+//     json = JSON.stringify(json);
+//     localStorage.setItem(mKey, json);
+// }
 
 var validateMail = () => {
     let mail = document.getElementById("up_mail").value;

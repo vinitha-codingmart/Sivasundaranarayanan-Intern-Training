@@ -27,7 +27,7 @@ route('/', () => {
 
 route('/Sign', () => {
     document.getElementById(app).innerHTML = document.getElementById('signDiv').innerHTML;
-    signLoad();
+    //signLoad();
 });
 
 

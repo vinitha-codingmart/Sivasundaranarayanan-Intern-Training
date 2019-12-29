@@ -70,7 +70,7 @@ header {
     color: #fff;
 }
 
-.logos svg {
+.logos svg, .logo svg {
     width: 180px;
     height: 30px;
     display: flex;
@@ -1212,6 +1212,18 @@ ul {
 .promo-banner-btn:hover {
     background-color: #f2f2f2;
     box-shadow: 2px 4px 8px 0px rgba(46, 61, 73, 0.2);
+}
+
+.bus-search-wrap {
+    display: flex;
+}
+
+.bus-search-wrap * {
+    padding: 5px 20px;
+}
+
+.bus input[type="button"] {
+    height: 30px;
 }
 
 .explore {
