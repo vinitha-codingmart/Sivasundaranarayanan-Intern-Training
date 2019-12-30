@@ -1,18 +1,10 @@
-
+var srcId, destId, src, dest, date;
 var clearsrclocation = () => {
     document.getElementById(`city-list-src`).innerHTML = "";
 }
 
-var getDate = () => {
-    return '2019';
-}
-
 var cleardestlocation = () => {
     document.getElementById(`city-list-dest`).innerHTML = "";
-}
-
-var setjDate = () => {
-
 }
 
 var fetchsrclocation = () => {
@@ -54,28 +46,65 @@ var fetchId = (id, name, flag) => {
 }
 
 var searchBuses = () => {
-    let srcId = document.getElementById(`bus-src-id`).innerHTML;
-    let destId = document.getElementById(`bus-dest-id`).innerHTML;
-    let src = document.getElementById(`bus-src`).value;
-    let dest = document.getElementById(`bus-dest`).value;
-    let date = document.getElementById('bus-jdate').value;
-    let proxy = `https://cors-anywhere.herokuapp.com/`
-    let url = `https://www.redbus.in/search/SearchResults?fromCity=${srcId}&toCity=${destId}&src=${src}&dst=${dest}&DOJ=${date}&sectionId=0&groupId=0&limit=0&offset=0&sort=0&sortOrder=0&meta=true&returnSearch=0`;
+    srcId = document.getElementById(`bus-src-id`).innerHTML;
+    destId = document.getElementById(`bus-dest-id`).innerHTML;
+    src = document.getElementById(`bus-src`).value;
+    dest = document.getElementById(`bus-dest`).value;
+    date = document.getElementById('bus-jdate').value;
 
-    let promise = fetch(proxy + url,
-        {
-            method: 'POST',
-            headers: { 'Content-Type': 'Application/json' }
-        }).then((res) => {
-            return res.json();
-        }).then((data) => {
-            //console.log(data);
-            populateBuses(data);
-        });
+    let promise = callApi(0, 10);
+    promise.then((res) => {
+        return res.json();
+    }).then((data) => {
+        createPagination(data.metaData.totalCount);
+        populateBuses(data);
+    });
+}
+
+callApi = (off, lim) => {
+    document.getElementById('bus-list-content').innerHTML = " ";
+    document.getElementById('L4').style.display = "block";
+
+    let proxy = `https://cors-anywhere.herokuapp.com/`
+    let url = `https://www.redbus.in/search/SearchResults?fromCity=${srcId}&toCity=${destId}&src=${src}&dst=${dest}&DOJ=${date}&sectionId=0&groupId=0&limit=${lim}&offset=${off}&sort=0&sortOrder=0&meta=true&returnSearch=0`;
+
+    let ret = fetch(proxy + url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'Application/json' }
+    });
+    return ret;
+}
+
+var createPagination = (count) => {
+    console.log(count);
+    let nos = (Math.floor(count / 10)) + ((count % 10) ? 1 : 0);
+    let pages = document.getElementById("bus-list-pages");
+    let page;
+    for (itr = 1; itr <= nos; itr++) {
+        page = document.createElement('a');
+        page.setAttribute('class', 'bus-page-item')
+        page.setAttribute('id', `bus-page-item${itr}`);
+        page.setAttribute('onclick', `refreshPage(${itr - 1},${(itr < nos) ? 10 : count % 10})`);
+        page.innerHTML = itr;
+        pages.appendChild(page);
+    }
+    document.getElementById("bus-page-item1").classList.add('activated');
+}
+
+var refreshPage = (offset, count) => {
+    let promise = callApi(offset, count);
+    promise.then((res) => {
+        return res.json();
+    }).then((data) => {
+        populateBuses(data);
+    });
+
+    document.getElementsByClassName('activated')[0].classList.remove('activated');
+    document.getElementById(`bus-page-item${offset + 1}`).classList.add('activated');
 }
 
 populateBuses = (data) => {
-    let container = document.getElementById('bus-list'), list_item;
+    let container = document.getElementById('bus-list-content'), list_item;
     for (buses of data.inv) {
         let dept = new Date(buses.dt);
         let dt = `${(dept.getHours() < 10 ? '0' : '') + dept.getHours()}:${(dept.getMinutes() < 10 ? '0' : '') + dept.getMinutes()}`;
@@ -107,12 +136,12 @@ populateBuses = (data) => {
             }
         ]
         list_item = getBusCard(details);
+        document.getElementById('L4').style.display = "none";
         container.appendChild(list_item);
     };
 }
 
 getBusCard = (bus) => {
-    // console.log(bus);
     let bottom = getDiv('bus-bottom', null);
     let card = getDiv('bus-card', null);
     let top = getDiv('bus-top', null), child;
@@ -190,12 +219,13 @@ window.onclick = (event) => {
             document.getElementById("mov-sidenav").style.width = "0";
         }
     }
-    if (event.target.matches('#bus-search'))
+    if (event.target.matches('#bus-search')) {
+        document.getElementById('L4').style.display = "block";
         searchBuses();
+    }
     if (!event.target.matches('.done')) {
-         clearsrclocation();
-         cleardestlocation();
-        console.log("log");
+        clearsrclocation();
+        cleardestlocation();
     }
 }
 

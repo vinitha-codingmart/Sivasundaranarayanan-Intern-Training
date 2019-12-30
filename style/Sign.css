@@ -107,7 +107,7 @@ body {
     box-shadow: none;
 }
 
-.active {
+.Sign-buttons .active {
     color: var(--active-font) !important;
     background-color: var(--active) !important;
     border: none !important;

@@ -1234,7 +1234,8 @@ header {
 }
 
 .bus input[type="text"] {
-    background-color: #d84f57;;
+    background-color: #d84f57;
+    ;
     border: none;
     border-bottom: 1px solid #fff;
     font-size: 1rem;
@@ -1242,11 +1243,11 @@ header {
     font-family: Montserrat;
 }
 
-.bus input[type="text"]::placeholder { 
+.bus input[type="text"]::placeholder {
     color: #FFFFFF;
     opacity: .5;
     font-weight: 900;
-  }
+}
 
 .bus input[type="button"] {
     margin: 10px 20px;
@@ -1269,13 +1270,49 @@ header {
     color: #ff1122;
 }
 
+#bus-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#L4 {
+    display: none;
+    margin: 10% 0;
+}
+
+#bus-list-pages {
+    margin: 1rem;
+    justify-content: center;
+    display: flex;
+}
+
+.bus-page-item {
+    cursor: pointer;
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+#bus-list-pages .activated {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+
+.bus-page-item:hover:not(.activated) {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
 .city-list {
     padding: 0 !important;
     position: absolute;
     width: 100%;
     list-style-type: none;
     background-color: #FAFAFA;
-    box-shadow: 3px 2px 5px rgba(0,0,0,.25);
+    box-shadow: 3px 2px 5px rgba(0, 0, 0, .25);
     overflow: auto;
     max-height: 15rem;
 }
@@ -1292,7 +1329,7 @@ header {
 }
 
 .city-list li:hover {
-    background-color: #EAEAEA;
+    background-color: #D0D0D0;
 }
 
 .bus-label {
@@ -1310,15 +1347,15 @@ header {
     transition: box-shadow ease .3s;
 }
 
-.bus-card:hover .bus-features ul li{
+.bus-card:hover .bus-features ul li {
     transition: all ease .1s;
     display: flex;
 }
 
-.bus-features ul li:not(:last-child)::after{
+.bus-features ul li:not(:last-child)::after {
     content: "";
     height: 100%;
-    width:1px;
+    width: 1px;
     background-color: #7e7e8c;
     margin-left: .75rem;
 }
@@ -1418,15 +1455,16 @@ header {
 
 .bus-view-seats {
     color: white;
-    padding: 10px 5px;
+    padding: 15px 20px;
     text-transform: uppercase;
     background-color: #d84e55;
     cursor: pointer;
-    font-size: .875rem;
-    font-weight: 700;
+    font-size: .75rem;
+    font-weight: lighter;
 }
 
 .bus-view-seats:hover {
+    font-weight: 900;
     background-color: #e9555d;
 }
 

@@ -622,36 +622,42 @@
                     <form class="bus-search-wrap">
                         <div class="bus-search-box">
                             <div class="bus-search-input">
-                                <input class="done" onfocus="fetchsrclocation()" placeholder="From" oninput="fetchsrclocation()" id="bus-src"
-                                    autocomplete="off" type="text">
+                                <input class="done" onfocus="fetchsrclocation()" placeholder="From"
+                                    oninput="fetchsrclocation()" id="bus-src" autocomplete="off" type="text">
                                 <label id="bus-src-id" style="display:none"></label>
                                 <div class="city-list" id="city-list-src"></div>
                             </div>
                         </div>
                         <div class="bus-search-box">
                             <div class="bus-search-input">
-                                <input class="done" onfocus="fetchdestlocation()" placeholder="To" oninput="fetchdestlocation()" id="bus-dest"
-                                    autocomplete="off" type="text">
+                                <input class="done" onfocus="fetchdestlocation()" placeholder="To"
+                                    oninput="fetchdestlocation()" id="bus-dest" autocomplete="off" type="text">
                                 <label id="bus-dest-id" style="display:none"></label>
                                 <div class="city-list" id="city-list-dest"></div>
                             </div>
                         </div>
-                        <input id="bus-jdate" value='' oninput="setjDate()" type="date">
-                        <input id="bus-rdate" value='' oninput="setrDate()" type="date">
+                        <input id="bus-jdate" value='' type="date">
+                        <input id="bus-rdate" value='' type="date">
                         <input id="bus-search" type="button" value="Search">
                     </form>
                     <div id="bus-list">
-                        <svg id="L4" height="50px" x="0px" y="0px" viewBox="0 0 10 10">
-                            <circle fill="#000">
-                            <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.1"></animate>
+                        <svg id="L4" height="75px" viewBox="0 0 40 40">
+                            <circle fill="#d84f57" cx="30" cy="10" r="5">
+                                <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite"
+                                    begin="0.1"></animate>
                             </circle>
-                            <circle fill="#000">
-                            <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.2"></animate>
+                            <circle fill="#d84f57" cx="20" cy="10" r="5">
+                                <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite"
+                                    begin="0.2"></animate>
                             </circle>
-                            <circle fill="#000">
-                            <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.3"></animate>
+                            <circle fill="#d84f57" cx="10" cy="10" r="5">
+                                <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite"
+                                    begin="0.3"></animate>
                             </circle>
-                            </svg>
+                        </svg>
+                        <div id="bus-list-content"></div>
+                        <div id="bus-list-pages">
+                        </div>
                     </div>
 
                 </div>
@@ -688,6 +694,7 @@
                     </div>
                 </div>
             </section>
+<!-- 
             <div class="bus-card">
                 <div class="bus-top">
                     <div class="bus-column col-1">
@@ -733,6 +740,7 @@
                     <div class="bus-view-seats">View Seats</div>
                 </div>
             </div>
+             -->
         </div>
 
         <section id="signDiv">
