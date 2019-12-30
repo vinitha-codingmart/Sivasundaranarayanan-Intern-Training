@@ -1,3 +1,20 @@
+
+var clearsrclocation = () => {
+    document.getElementById(`city-list-src`).innerHTML = "";
+}
+
+var getDate = () => {
+    return '2019';
+}
+
+var cleardestlocation = () => {
+    document.getElementById(`city-list-dest`).innerHTML = "";
+}
+
+var setjDate = () => {
+
+}
+
 var fetchsrclocation = () => {
     let string = document.getElementById('bus-src').value;
     fetchlocation(string, null);
@@ -5,7 +22,7 @@ var fetchsrclocation = () => {
 
 var fetchdestlocation = () => {
     let string = document.getElementById('bus-dest').value;
-    fetchlocation(string, document.getElementById('bus-src').value);
+    fetchlocation(string, (document.getElementById('bus-src').value) ? document.getElementById('bus-src').value : " ");
 }
 
 var fetchlocation = (string, constraint) => {
@@ -20,40 +37,132 @@ var fetchlocation = (string, constraint) => {
 var populate = (json, constraint) => {
     let flag = (!constraint) ? "src" : "dest";
     let div = document.getElementById(`city-list-${flag}`);
-    let cnt = 0;
-    div.innerHTML = "<ol>";
+    div.innerHTML = "";
     json.forEach((data) => {
         if (data.Name != constraint) {
-            div.innerHTML += `<li onclick="fetchId(${data.ID},'${data.Name}','${flag}')">${data.Name}</li><br/>`;
-            cnt++;
+            div.innerHTML += `<li onclick="fetchId(${data.ID},'${data.Name}','${flag}')">${data.Name}</li>`;
         }
     })
-    div.innerHTML += cnt;
+
 }
 
 var fetchId = (id, name, flag) => {
     document.getElementById(`bus-${flag}`).value = name;
-    document.getElementById(`city-list-${flag}`).innerHTML = id;
+    document.getElementById(`city-list-${flag}`).innerHTML = "";
+    document.getElementById(`bus-${flag}-id`).innerHTML = id;
+    (flag == "dest") ? cleardestlocation() : clearsrclocation();
 }
 
 var searchBuses = () => {
-    let src = document.getElementById(`city-list-src`).innerHTML;
-    let dest = document.getElementById(`city-list-dest`).innerHTML;
+    let srcId = document.getElementById(`bus-src-id`).innerHTML;
+    let destId = document.getElementById(`bus-dest-id`).innerHTML;
+    let src = document.getElementById(`bus-src`).value;
+    let dest = document.getElementById(`bus-dest`).value;
+    let date = document.getElementById('bus-jdate').value;
     let proxy = `https://cors-anywhere.herokuapp.com/`
-    let url = `https://www.redbus.in/search/SearchResults?fromCityId=${src}&toCityId=${dest}&DOJ=29-Dec-2019&sectionId=0&groupId=0&limit=0&offset=0&sort=0&sortOrder=0&meta=true&returnSearch=0`;
+    let url = `https://www.redbus.in/search/SearchResults?fromCity=${srcId}&toCity=${destId}&src=${src}&dst=${dest}&DOJ=${date}&sectionId=0&groupId=0&limit=0&offset=0&sort=0&sortOrder=0&meta=true&returnSearch=0`;
 
-    let promise = fetch(proxy+url,
+    let promise = fetch(proxy + url,
         {
             method: 'POST',
             headers: { 'Content-Type': 'Application/json' }
-        })
-        .then((res) => {
-            console.log(res);
+        }).then((res) => {
             return res.json();
-        }
-        )
-        .then((data) =>
-            console.log(data));
+        }).then((data) => {
+            //console.log(data);
+            populateBuses(data);
+        });
+}
+
+populateBuses = (data) => {
+    let container = document.getElementById('bus-list'), list_item;
+    for (buses of data.inv) {
+        let dept = new Date(buses.dt);
+        let dt = `${(dept.getHours() < 10 ? '0' : '') + dept.getHours()}:${(dept.getMinutes() < 10 ? '0' : '') + dept.getMinutes()}`;
+        let arvl = new Date(buses.at);
+        let at = `${(arvl.getHours() < 10 ? '0' : '') + arvl.getHours()}:${(arvl.getMinutes() < 10 ? '0' : '') + arvl.getMinutes()}`;
+        let dur = `${Math.floor(buses.dur / 60)}h ${buses.dur % 60}m`;
+
+        let details = [
+            {
+                "T1": buses.Tvs,
+                "T2": buses.bt
+            }, {
+                "T1": dt,
+                "T2": buses.StdBp
+            }, {
+                "T1": dur
+            }, {
+                "T1": at,
+                "T2": buses.StdDp
+            }, {
+                "T1": buses.rt.totRt,
+                "T2": buses.rt.ct
+            }, {
+                "T1": 'Starts from',
+                "T2": `INR ${buses.frLst[0]}`
+            }, {
+                "T1": `${buses.nsa} Seats available`,
+                "T2": `${buses.WnSt} Window`
+            }
+        ]
+        list_item = getBusCard(details);
+        container.appendChild(list_item);
+    };
+}
+
+getBusCard = (bus) => {
+    // console.log(bus);
+    let bottom = getDiv('bus-bottom', null);
+    let card = getDiv('bus-card', null);
+    let top = getDiv('bus-top', null), child;
+
+    for (let itr = 1; itr <= 7; itr++) {
+        child = createColumn(itr, bus[itr - 1]);
+        top.appendChild(child);
+    }
+    card.appendChild(top);
+
+    child = getDiv('bus-features', null);
+    child.appendChild(createList());
+    bottom.appendChild(child);
+    child = getDiv('bus-view-seats', "View Seats");
+    bottom.appendChild(child);
+    card.appendChild(bottom);
+
+    return card;
+}
+
+createList = () => {
+    let values = ["Amenities", "Bus Photos", "Boarding & Dropping Points", "Reviews", "Cancellation Policy", "Rest Stop(2)"];
+    let parent = document.createElement('ul'), child;
+    for (value of values) {
+        child = document.createElement('li');
+        child.innerHTML = value;
+        parent.appendChild(child);
+    }
+    return parent;
+}
+
+createColumn = (ind, data) => {
+    let parent = getDiv('bus-column', null);
+    parent.classList.add(`col-${ind}`);
+    let child = document.createElement('div');
+    child.innerHTML = data.T1;
+    parent.appendChild(child);
+    if (data.T2) {
+        child = document.createElement('div');
+        child.innerHTML = data.T2;
+        parent.appendChild(child);
+    }
+    return parent;
+}
+
+getDiv = (cls, value) => {
+    let div = document.createElement('div');
+    div.classList.add(cls);
+    div.innerHTML = value;
+    return div;
 }
 
 window.onscroll = () => {
@@ -80,7 +189,24 @@ window.onclick = (event) => {
         if (!event.target.matches('.sidenav')) {
             document.getElementById("mov-sidenav").style.width = "0";
         }
-    } if (event.target.matches('#bus-search'))
+    }
+    if (event.target.matches('#bus-search'))
         searchBuses();
+    if (!event.target.matches('.done')) {
+         clearsrclocation();
+         cleardestlocation();
+        console.log("log");
+    }
+}
 
+load = (event) => {
+    let date = new Date();
+
+    let jd = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    let rd = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`;
+
+    document.getElementById('bus-jdate').min = jd;
+    document.getElementById('bus-rdate').min = rd;
+    document.getElementById('bus-jdate').value = jd;
+    document.getElementById('bus-rdate').value = rd;
 }

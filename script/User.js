@@ -4,12 +4,14 @@ var data;
 var current;
 
 window.onload = () => {
-    sKey = "session_details";
-    if (!localStorage.getItem('session_details')) window.location.replace = "./index.html";
-    let title = document.getElementsByClassName('user-name')[0];
-    title.innerHTML = getUserName();
-    loadData();
-    populateView();
+    // sKey = "session_details";
+    // if (!localStorage.getItem('session_details')) window.location.replace = "./index.html";
+    // let title = document.getElementsByClassName('user-name')[0];
+    // title.innerHTML = getUserName();
+    // loadData();
+    // populateView();
+    if (!userPresent())
+        window.location.replace = "./index.html";
 }
 
 initializePlayer = (index) => {

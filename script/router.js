@@ -9,13 +9,13 @@ let route = (name, template) => {
 let resolverouter = (route) => {
     try {
         return routes[route];
-    } catch(e) {
+    } catch (e) {
         throw new Error(e);
     }
 }
 
 let router = () => {
-    let url =  "/" + window.location.hash.slice(1);
+    let url = "/" + window.location.hash.slice(1);
     const resolvedrouter = resolverouter(url);
     resolvedrouter.call(this);
 }
@@ -50,4 +50,6 @@ route('/Career', () => {
 window.onhashchange = () => {
     router();
 };
-window.onload = router();
+
+window.onload = (event) => { router(); 
+load(event);}

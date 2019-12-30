@@ -9,11 +9,10 @@ var firebaseConfig = {
     measurementId: "G-CXTD71F641"
 };
 
-
 firebase.initializeApp(firebaseConfig);
 
 var login = (email, pass) => {
-    document.body.style.cursor='wait';
+    document.body.style.cursor = 'wait';
     let promise = firebase.auth().signInWithEmailAndPassword(email, pass)
         .then(() => {
             window.location.href = "./User.html";
@@ -54,4 +53,11 @@ logoutUser = () => {
         .then(() => {
             window.location.href = "../";
         });
+}
+
+userPresent = () => {
+    if (firebase.auth().currentUser)
+        return true;
+    else
+        return false;
 }
