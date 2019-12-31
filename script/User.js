@@ -6,12 +6,13 @@ var current;
 window.onload = () => {
     // sKey = "session_details";
     // if (!localStorage.getItem('session_details')) window.location.replace = "./index.html";
-    // let title = document.getElementsByClassName('user-name')[0];
-    // title.innerHTML = getUserName();
-    // loadData();
-    // populateView();
+
     if (!userPresent())
-        window.location.replace = "./index.html";
+        window.location.href = "./index.html";
+    let title = document.getElementsByClassName('user-name')[0];
+    title.innerHTML = getUserName();
+    loadData();
+    populateView();
 }
 
 initializePlayer = (index) => {
@@ -25,10 +26,10 @@ initializePlayer = (index) => {
     toggleplay(false);
 }
 
-getUserName = () => {
-    let name = localStorage.getItem(sKey);
-    return name;
-}
+// getUserName = () => {
+//     let name = localStorage.getItem(sKey);
+//     return name;
+// }
 
 var openNav = () => {
     let bar = document.getElementsByClassName("side-wrapper")[0];

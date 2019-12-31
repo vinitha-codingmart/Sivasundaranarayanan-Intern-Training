@@ -1,4 +1,10 @@
+
+
 var srcId, destId, src, dest, date;
+
+google.charts.load("current", { packages: ["bar",'corechart'] });
+//google.charts.setOnLoadCallback(drawChart);
+
 var clearsrclocation = () => {
     document.getElementById(`city-list-src`).innerHTML = "";
 }
@@ -58,6 +64,7 @@ var searchBuses = () => {
     }).then((data) => {
         createPagination(data.metaData.totalCount);
         populateBuses(data);
+        drawChart(data);
     });
 }
 
@@ -75,10 +82,45 @@ callApi = (off, lim) => {
     return ret;
 }
 
+
+function drawChart(data) {
+    var chartData = [];
+    let cnt = data.inv.length;
+    for (itr = 0; itr < cnt; itr++) {
+        chartData[itr] = [`${data.inv[itr].Tvs}`, getTime(data.inv[itr].at)];
+    }
+
+    var view = new google.visualization.DataTable({
+        cols: [
+            { label: 'Travels', type: 'string' },
+            { label: 'Time of Depature', type: 'timeofday' }
+        ]
+    });
+    view.addRows(chartData);
+
+    var options = {
+        hAxis: {
+            slantedText:true,
+            slantedTextAngle: 90
+        },
+        width: 800,
+        height: 600
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById("barchart_values"));
+    chart.draw(view, options);
+}
+
+getTime = (time) => {
+    let date = new Date(time);
+    let ret = [date.getHours(), date.getMinutes(), 0];
+    return ret;
+}
+
 var createPagination = (count) => {
     console.log(count);
     let nos = (Math.floor(count / 10)) + ((count % 10) ? 1 : 0);
     let pages = document.getElementById("bus-list-pages");
+    pages.innerHTML = "";
     let page;
     for (itr = 1; itr <= nos; itr++) {
         page = document.createElement('a');
@@ -96,6 +138,7 @@ var refreshPage = (offset, count) => {
     promise.then((res) => {
         return res.json();
     }).then((data) => {
+        drawChart(data);
         populateBuses(data);
     });
 
@@ -231,12 +274,12 @@ window.onclick = (event) => {
 
 load = (event) => {
     let date = new Date();
-
     let jd = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    let rd = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`;
-
     document.getElementById('bus-jdate').min = jd;
-    document.getElementById('bus-rdate').min = rd;
     document.getElementById('bus-jdate').value = jd;
-    document.getElementById('bus-rdate').value = rd;
+
+    date.setDate(date.getDate() + 1);
+    jd = `${date.getFullYear()}-${((date.getMonth() < 9) ? '0' : '') + (date.getMonth() + 1)}-${((date.getDate() < 10) ? '0' : '') + date.getDate()}`;
+    document.getElementById('bus-rdate').min = jd;
+    document.getElementById('bus-rdate').value = jd;
 }

@@ -11,53 +11,62 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-var login = (email, pass) => {
-    document.body.style.cursor = 'wait';
-    let promise = firebase.auth().signInWithEmailAndPassword(email, pass)
-        .then(() => {
-            window.location.href = "./User.html";
-        })
-        .catch((error) => {
-            switch (error.code) {
-                case 'auth/invalid-email':
-                case 'auth/wrong-password':
-                case 'auth/user-not-found':
-                    document.getElementById('in_error').classList.add('show');
-            }
+// firebase.auth().onAuthStateChanged( (user) => {
+//     if(user) {
+//         window.location.href = "./User.html";
+//     } else {
+//         window.location.href = "./index.html";
+//     }
+// })
 
-        });
+var login = (email, pass) => {
+    firebase.auth().signInWithEmailAndPassword(email, pass).then(() => {
+        
+        window.location.href = "./User.html";
+    }).catch((error) => {
+        switch (error.code) {
+            case 'auth/invalid-email':
+            case 'auth/wrong-password':
+            case 'auth/user-not-found':
+                document.getElementById('in_error').classList.add('show');
+        }
+
+    });
 }
 
 var createAcc = (email, pass, name) => {
-    let promise = firebase.auth().createUserWithEmailAndPassword(email, pass)
-        .then(() => {
-            updateProfile(name);
-        })
-        .catch((error) => {
-            if (error.code === 'auth/email-already-in-use')
-                alert("You're already our customer");
-        });
+    firebase.auth().createUserWithEmailAndPassword(email, pass).then(() => {
+        updateProfile(name);
+    }).catch((error) => {
+        if (error.code === 'auth/email-already-in-use')
+            alert("You're already our customer");
+    });
 }
 
 
 var updateProfile = (name) => {
     var user = firebase.auth().currentUser;
-    user.updateProfile({ displayName: name })
-        .then(() => {
-            window.location.href = "./User.html";
-        });
+    user.updateProfile({ displayName: name }).then(() => {
+        window.location.href = "./User.html";
+    });
 }
 
 logoutUser = () => {
     firebase.auth().signOut()
         .then(() => {
-            window.location.href = "../";
+            window.location.href = "./index.html";
         });
 }
 
 userPresent = () => {
-    if (firebase.auth().currentUser)
+    if (firebase.auth().currentUser) {
+        console.log(firebase.auth().currentUser);
         return true;
-    else
+    } else
         return false;
+}
+
+getUserName = () => {
+    console.log(firebase.auth().currentUser);
+    return firebase.auth().currentUser.displayName;
 }
