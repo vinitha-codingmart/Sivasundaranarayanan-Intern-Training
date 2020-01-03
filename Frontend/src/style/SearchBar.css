@@ -1,0 +1,33 @@
+.searchBar {
+    position: relative;
+}
+
+.searchBox:focus {
+    outline: #00dfff solid 1px;
+}
+
+.searchIcon {
+    position: absolute;
+    top: 25%;
+    left: .7em;
+    color: #bbc0c4;
+    user-select: none;
+}
+
+.searchIcon path {
+    fill: currentColor;
+}
+
+.searchBox {
+    padding: .6em .7em;
+    padding-left: 32px;
+    border: none;
+    border: 1px solid #bbc0c4;
+    border-radius: 3px;
+    float: left;
+}
+
+.searchBox::placeholder {
+    color: #BFC4C7;
+    user-select: none;
+}

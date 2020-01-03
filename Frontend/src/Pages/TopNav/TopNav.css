@@ -1,0 +1,19 @@
+.topNav {
+    box-shadow: 0 1px 0 rgba(12,13,14,0.15);
+    border-top: 3px solid #f48024;
+    max-width: 97.2307692rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    background-color: #fff;
+    top: 0;
+    z-index: 1;
+}
+
+
+.link:hover {
+    background-color: #e4e6e8;
+    color: #000;
+}

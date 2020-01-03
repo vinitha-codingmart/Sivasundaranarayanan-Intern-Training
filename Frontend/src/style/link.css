@@ -1,0 +1,11 @@
+.link {
+    margin: 0 10px;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 1000px;
+    color: #535a60;
+    white-space: nowrap;
+    font-size: 13px;
+    border-radius: 100px;
+    cursor: pointer;
+}
