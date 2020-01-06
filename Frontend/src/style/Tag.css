@@ -1,0 +1,38 @@
+.tag {
+    background-color:#e0e0e0;
+    display: inline-flex;
+    border-radius: 5px;
+    margin: 5px 5px;
+    align-items: center;
+    user-select: none;
+}
+
+.click:hover {
+    cursor: pointer;
+    background-color: #bdbdbd;
+}
+
+.tag span {
+    color: #757575;
+    font-size: .75rem;
+    font-weight: 100;
+    letter-spacing: 1px;
+    margin: .5rem;
+}
+
+.tag svg {
+    color: #212121;
+    margin: .25rem .25rem .25rem .15rem;
+    padding: 1px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.tag svg:hover {
+    background-color: #212121;
+    color: #bdbdbd;
+}
+
+.tag svg path {
+    fill: currentColor;
+}

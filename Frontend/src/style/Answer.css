@@ -1,0 +1,9 @@
+.answer {
+    display: flex;
+    align-items: center;
+}
+
+.answer pre {
+    margin-left: 10px;
+    font-family: Arial;
+}

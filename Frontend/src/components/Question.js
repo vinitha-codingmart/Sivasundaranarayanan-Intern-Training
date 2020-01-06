@@ -5,6 +5,8 @@ import '../style/Question.css'
 
 import axios from 'axios';
 import Answers from './Answers';
+import Reputation from './Reputation';
+import Tag from './Tag';
 
 export class Question extends React.Component {
 
@@ -12,7 +14,8 @@ export class Question extends React.Component {
         super(props);
         this.state = {
             reputation: this.props.Question.reputation,
-            addAnswer: false
+            addAnswer: false,
+            tags: []
         }
     }
 
@@ -30,22 +33,30 @@ export class Question extends React.Component {
         return cDate;
     }
 
-    reputeQuestion = (forUp) => e => {
+    reputeQuestion = (forUp) => {
         let rep = this.state.reputation + forUp;
         let id = this.props.id + 1
         if (rep + 1) {
-            console.log(id);
-            this.setState({
-                reputation: rep
-            })
-            axios.put('http://localhost:3001/updateRep', {
+            axios.put('http://localhost:3001/updateQuesRep', {
                 reputation: rep,
                 id: id
+            }).then(() => {
+                this.setState({
+                    reputation: rep
+                })
             })
         }
     }
 
-  
+    getTag = () => {
+        let id = this.props.Question.qid;
+        axios.get(`http://localhost:3001/getTag?id=${id}`
+        ).then((res) => {
+            this.setState({
+                tags: res.data
+            })
+        })
+    }
 
     cancelAnswer = () => {
         this.setState({
@@ -53,8 +64,12 @@ export class Question extends React.Component {
         })
     }
 
+    componentDidMount() {
+        this.getTag();
+    }
+
     render() {
-        const { title, description, created_at } = this.props.Question;
+        let { title, description, created_at } = this.props.Question;
         let reputation = this.state.reputation;
 
         let btnStyle = {
@@ -63,21 +78,22 @@ export class Question extends React.Component {
 
         return (
             <div className="question" >
-
                 <span className="header">{title}</span>
-                <span className="ask">Asked on</span> <span className="date">{this.getDate(created_at)}</span>
+                <div><span className="ask">Asked on</span> <span className="date">{this.getDate(created_at)}</span></div>
 
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Reputation function={this.reputeQuestion} reputation={reputation} />
+                    <div style={{ display: 'flex', 'flexDirection': 'column' }}>
+                        <pre className="description">{description}</pre>
+                        <div style={{ display: 'inline-block', marginLeft: '10px'}}>
+                            {
+                                this.state.tags.map((tag, index) =>
+                                    <Tag key={index}>{tag.tag}</Tag>
+                                    )
+                            }
+                        </div>
 
-                    <div className="reputation">
-                        <svg onClick={this.reputeQuestion(+1)} viewBox="0 0 36 36" width='36'> <path d="M2 26h32L18 10 2 26z"></path>
-                        </svg>
-                        <span className="reputation-count">{reputation}</span>
-                        <svg onClick={this.reputeQuestion(-1)} viewBox="0 0 36 36" width='36'> <path d="M2 10h32L18 26 2 10z"></path>
-                        </svg>
                     </div>
-
-                    <span className="description">{description}</span>
                 </div>
                 <Answers cancelEvent={this.cancelAnswer} id={this.props.id} addArea={this.state.addAnswer} />
                 <Button styleName="blue" clickEvent={this.addAnswer} name="Answer!" style={btnStyle} />

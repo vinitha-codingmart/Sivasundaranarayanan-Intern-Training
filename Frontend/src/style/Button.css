@@ -1,11 +1,11 @@
 .button {
-    
     padding: .8rem;
     border: 1px solid transparent;
     outline: none;
     margin: 1%;
     cursor: pointer;
     border-radius: 2px;
+    width: 10vw;
 }
 
 .blue {

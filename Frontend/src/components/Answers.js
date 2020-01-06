@@ -19,12 +19,7 @@ export default class Answers extends Component {
             qid: this.props.id+1,
             content: this.state.content
         }).then((res) => {
-            this.setState({
-                answers: this.state.answers.concat({
-                    id: res.data.insertID,
-                    content: this.state.content
-                })
-            });
+            this.fetchAnswers();
         }).then(() => {
             this.setState({
                 content: ''
@@ -48,7 +43,6 @@ export default class Answers extends Component {
     }
 
     updateText = event => {
-        console.log(event.target.value);
         this.setState({
             content: event.target.value
         });
@@ -57,17 +51,17 @@ export default class Answers extends Component {
     render() {
         let areaStyle = {
             width: (this.props.addArea) ? '100%' : '0',
-            height: (this.props.addArea) ? '50vh' : '0',
+            height: (this.props.addArea) ? '50%' : '0',
             display: (this.props.addArea) ? 'block' : 'none'
         };
         return (
             <div className="answerBox" >
                 {
                     this.state.answers.map((answer, index) => 
-                        <Answer key={index} id={answer.id} >{answer.content}</Answer>
+                        <Answer key={index} id={answer.aid} >{answer.content}</Answer>
                     )
                 }
-                < div style={areaStyle} >
+                <div style={areaStyle} >
                     <textarea value={this.state.content} onChange={this.updateText} className="aBox" ></textarea>
                     <Button styleName="blue" name="Add" clickEvent={this.addAnswer} />
                     <Button styleName="grey" name="Cancel" clickEvent={this.props.cancelEvent} />

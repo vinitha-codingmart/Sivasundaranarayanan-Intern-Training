@@ -2,11 +2,11 @@ var Question = require('../model/quesModel');
 
 exports.create_ques = (req, res) => {
     var question = new Question(req.body);
-
-    Question.createQuestion(question, (err, question) => {
+    
+    Question.createQuestion(question, (err, ques) => {
         if (err)
             console.log(err);
-        res.json(question);
+        res.json(ques);
     });
 }
 

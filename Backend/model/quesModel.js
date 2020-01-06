@@ -9,8 +9,9 @@ var Question = function (question) {
 
 Question.createQuestion = function (newQuestion, result) {
     sql.query("INSERT INTO Questions SET ? ", newQuestion, (err, res) => {
-        if (err)
+        if (err) {
             result(err, null);
+        }
         else
             result(null, res);
 
@@ -31,7 +32,7 @@ Question.updateReputation = (rep, id, result) => {
     sql.query("UPDATE Questions SET reputation = ? WHERE qid = ? ", [rep, id], (err, res) => {
         if (err)
             result(err, null);
-        else 
+        else
             result(null, res);
     });
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { TopNav } from './Pages/TopNav/TopNav';
 import Content from './Pages/Content/Content';
+import SideNav from './Pages/SideNav/SideNav';
 
 class App extends Component {
 
@@ -32,9 +33,10 @@ class App extends Component {
     return (
       <div className="App">
         <TopNav refresh={this.callApi} />
+        <div className="main">
         <Content response={this.state.Apiresponse} />
-        {/* <SideBar /> */}
-        <p></p>
+        <SideNav />
+        </div>
       </div>
 
     );

@@ -1,4 +1,12 @@
 .App {
   text-align: center;
-  font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.main {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  padding: 1%;
+  box-sizing: border-box;
 }
