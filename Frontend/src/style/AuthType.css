@@ -1,0 +1,44 @@
+.authBox {
+    flex-direction: column;
+    padding: 20px 30px;
+    box-sizing: border-box;
+}
+
+.authInputBox {
+    position: relative;
+    margin-top: 1rem;
+    padding: 5px;
+}
+
+.authInputBox input {
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid #BDBDBD;
+    outline: none;
+    padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.authInputBox label {
+    font-size: 1rem;
+    top: .75rem;
+    left: 10px;
+    color: #A0A0A0;
+    font-weight: 500;
+    user-select: none;
+    position: absolute;
+    transition: left ease-in-out .1s, top ease-in-out .25s, font-size ease-in-out .15s;
+}
+
+.authInputBox input:focus {
+    outline: none;
+}
+
+.authInputBox input:focus+label, .authInputBox input:not(:placeholder-shown)+label {
+    top: -.5rem;
+    left: 7px;
+    font-size: .75rem;
+    font-weight: 900;
+    color: #2196f3;
+}

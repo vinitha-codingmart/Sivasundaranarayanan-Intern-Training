@@ -1,0 +1,12 @@
+.account {
+    display: flex;
+    cursor: pointer;
+}
+
+.account svg{
+    color: #696969;
+}
+
+.account path {
+    fill: currentColor
+}

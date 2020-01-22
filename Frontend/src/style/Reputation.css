@@ -1,0 +1,38 @@
+.reputation {
+    width: 5%;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upVoted {
+    color: #ff9800 !important;
+}
+
+.upVoted:hover {
+    color: #ff9800 !important;
+    cursor: auto;
+}
+
+.reputation svg {
+    cursor: pointer;
+    color: #BBC0C4;
+}
+
+.reputation svg:hover {
+    color: #6A737C;
+}
+
+.reputation svg:hover path {
+    transition-duration: .1s;
+}
+
+.reputation svg path {
+    fill: currentColor;
+}
+
+.reputation-count {
+    color: #6A737C;
+    user-select: none;
+    font-size: 1.5rem;
+}

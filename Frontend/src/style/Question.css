@@ -2,7 +2,7 @@
     margin: 1rem;
     margin-bottom: 2rem;
     width: 90%;
-    text-align: left;   
+    text-align: left;
     border-bottom: 1px solid #BBC0C4;
     user-select: none;
     display: flex;
@@ -29,36 +29,27 @@
     font-weight: 700;
 }
 
-.reputation {
-    width: 5%;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    color: #BBC0C4;
-}
-
-.reputation svg {
-    cursor: pointer;
-}
-
-.reputation svg:hover path {
-    fill: #6A737C;
-    transition-duration: .1s;
-}
-
-.reputation svg path {
-    fill: currentColor;
-}
-
-.reputation-count {
-    color: #6A737C;
-    user-select: none;
-    font-size: 1.5rem;
-}
-
 .description {
+    white-space: pre-wrap;
     color: #242729;
     margin: 1.25rem;
     font-weight: 500;
     font-family: Arial;
+}
+
+.content {
+    display: flex;
+    align-items: flex-start;
+}
+
+.content-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-details {
+    align-items: center;
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
 }

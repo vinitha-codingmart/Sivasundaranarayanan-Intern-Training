@@ -1,9 +1,46 @@
 .answer {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    position: relative;
+    padding-top: 1rem;
+    border-top: .5px solid #BBC0C4;
+    margin-bottom: 10px;
+}
+
+.answer::before {
+    
+    width: 100%;
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
 }
 
 .answer pre {
     margin-left: 10px;
     font-family: Arial;
+}
+
+.answer .title {
+    text-align: left;
+    font-size: .75rem;
+    padding: .5rem .25rem;
+    color: #6A737C;
+    display: inline-block;
+}
+
+.answer .value {
+    font-size: .95rem;
+    color: #242729;
+    font-weight: 700;
+}
+
+.userdetails {
+    float: right;
+}
+
+.user{
+    float: right;
+    font-size: .9rem;
+    color: #0077CC;
+    font-weight: 600;
 }

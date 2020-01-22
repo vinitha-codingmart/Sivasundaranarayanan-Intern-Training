@@ -1,5 +1,7 @@
 .searchBar {
+    display: flex;
     position: relative;
+    margin-right: 10%;
 }
 
 .searchBox:focus {

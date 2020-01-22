@@ -1,22 +1,23 @@
 {
-  "name": "api",
+  "name": "back",
   "version": "1.0.0",
+  "description": "Stackoverflow",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "keywords": [],
-  "description": "",
   "dependencies": {
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "g": "^2.0.1",
-    "mysql": "^2.17.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.2"
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.1.0",
+    "nodemon": "^2.0.2",
+    "password-hash": "^1.2.2",
+    "sequelize": "^5.21.3",
+    "sequelize-cli": "^5.5.1"
   }
 }

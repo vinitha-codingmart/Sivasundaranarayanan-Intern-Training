@@ -24,7 +24,7 @@ export default class SideNav extends Component {
                 });
             }).then(() => {
                 this.setState({
-                    tags : tags
+                    tags: tags
                 })
             })
     }
@@ -33,14 +33,15 @@ export default class SideNav extends Component {
         this.getTag();
     }
 
+
     render() {
         return (
             <div className="SideNav-wrapper">
                 <div className="SideNav-header">Tag</div>
-                <div >
+                <div className="SidaNav-content">
                     {
                         this.state.tags.map((tag, index) =>
-                            <Tag needClose={false} index={index} key={index}>{tag.tag}</Tag>
+                            <Tag clickEvent={this.props.filterFunction} needClose={false} index={index} key={index}>{tag.tag}</Tag>
                         )
                     }
                 </div>

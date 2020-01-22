@@ -1,0 +1,14 @@
+.Questions{
+    display: flex;
+    flex-direction: column;
+}
+
+.Questions .title {
+    text-align: left;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, .5);
+    font-weight: 700;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 0px 0px 10px 10px;
+    margin-bottom: 10px;
+}

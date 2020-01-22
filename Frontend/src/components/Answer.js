@@ -6,46 +6,57 @@ import Axios from 'axios'
 
 export default class Answer extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            reputation: 0
+            reputation: this.props.answer.reputations,
+            user: ""
         }
     }
 
-    fetchRep = () => {
-        Axios.get(`http://localhost:3001/getRep?id=${this.props.id}`)
-        .then( (res) => {
-            let temp
-            temp = res.data[0] ? res.data[0].reputations : 0
-            this.setState( {
-                reputation: temp
-            })
-        })
-    }
-
-    componentDidMount() {
-        this.fetchRep();
-    }
 
     repute = (rep) => {
         let reputation = this.state.reputation + rep;
-        Axios.post('http://localhost:3001/updateAnsRep', {
-            reputation: reputation,
-            id: this.props.id
+        Axios.put('http://localhost:3001/updateAnsRep', {
+            reputations: reputation,
+            aid: this.props.id
         }).then((res) => {
-            console.log(res)
             this.setState({
                 reputation: reputation
             })
         })
     }
 
+    getUserName = (id) => {
+        Axios.get(`http://localhost:3001/getUserName?UserId=${id}`).then((res) => {
+            this.setState({
+                user: res.data[0].name
+            })
+        })
+    }
+
+    getDate = (data) => {
+        return new Date(data).toLocaleDateString();
+    }
+
+    componentDidMount() {
+        this.getUserName(this.props.answer.UserId);
+    }
+
     render() {
+        let { content, createdAt } = this.props.answer;
         return (
             <div className="answer">
                 <Reputation function={this.repute} reputation={this.state.reputation} />
-                <pre>{this.props.children}</pre>
+                <div style={{width: '90%'}}><pre style={{ whiteSpace: 'pre-wrap' }}>{content}</pre>
+                    <div className="userdetails">
+                        <span className="title">answered {this.getDate(createdAt)}</span>
+                        <div style={{alignItems:'flex-start', display: 'flex'}}>
+                            <img alt="account" src="account.png" height="30px"></img>
+                            <span className="user">{this.state.user}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

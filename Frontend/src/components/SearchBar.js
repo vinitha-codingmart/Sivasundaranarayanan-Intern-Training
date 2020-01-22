@@ -10,7 +10,7 @@ const SearchBar = (props) => {
                 </path>
             </svg>
 
-            <input style={{ width: props.boxWidth }} placeholder="Search..." className="searchBox" type="text"></input>
+            <input value={props.text} onChange={props.typeEvent} style={{ width: props.boxWidth }} placeholder="Search..." className="searchBox" type="text"></input>
 
         </div>
     )

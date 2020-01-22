@@ -2,6 +2,12 @@
     padding: 1.5rem;
 }
 
+.answerCount {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #696969;
+}
+
 .aBox {
     margin: 1rem 0px;
 }
