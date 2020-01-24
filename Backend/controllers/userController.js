@@ -8,6 +8,17 @@ Users = () => {
 
 }
 
+Users.getUserDetails = (id) => {
+    let promise = User.findOne({
+        attributes: ['name'],
+        where: {
+            id
+        }
+    })
+
+    return promise
+}
+
 Users.verifyUser = async (data) => {
     let { mail, password } = data;
     let auth;
@@ -84,7 +95,7 @@ Users.createUser = async (data) => {
 
 Users.getUserName = (id) => {
 
-    let promise = User.findAll({
+    let promise = User.findOne({
         attributes: ['name'],
         where: {
             id
@@ -115,6 +126,7 @@ Users.getId = async (activeToken) => {
 
     return promise
 }
+    
 
 Users.signOut = (id) => {
     let promise = User.update({

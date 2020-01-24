@@ -3,6 +3,8 @@ import Reputation from './Reputation'
 
 import '../style/Answer.css'
 import Axios from 'axios'
+import Comments from './Comments';
+import Option from './Option';
 
 export default class Answer extends Component {
 
@@ -30,13 +32,15 @@ export default class Answer extends Component {
     getUserName = (id) => {
         Axios.get(`http://localhost:3001/getUserName?UserId=${id}`).then((res) => {
             this.setState({
-                user: res.data[0].name
+                user: res.data.name
             })
         })
     }
 
     getDate = (data) => {
-        return new Date(data).toLocaleDateString();
+        var dateOptions = { year: "numeric", month: "short", day: "2-digit" };
+        let date = new Date(data).toLocaleDateString('en-US', dateOptions) 
+        return date;
     }
 
     componentDidMount() {
@@ -44,17 +48,28 @@ export default class Answer extends Component {
     }
 
     render() {
+        let opStyle = {
+            display: true ? 'block' : 'none',
+            marginLeft: '.75rem'
+        }
         let { content, createdAt } = this.props.answer;
+
         return (
             <div className="answer">
                 <Reputation function={this.repute} reputation={this.state.reputation} />
-                <div style={{width: '90%'}}><pre style={{ whiteSpace: 'pre-wrap' }}>{content}</pre>
+                <div style={{ width: '90%', fontSize: "15px", color: "#242729" }}><pre style={{ whiteSpace: 'pre-wrap' }}>{content}</pre>
+                    <div style={opStyle}>
+                        <Option styleName="cmtGrey">delete</Option>
+                    </div>
                     <div className="userdetails">
                         <span className="title">answered {this.getDate(createdAt)}</span>
-                        <div style={{alignItems:'flex-start', display: 'flex'}}>
-                            <img alt="account" src="account.png" height="30px"></img>
+                        <div style={{ alignItems: 'flex-start', display: 'flex' }}>
+                            <img alt="account" src="/account.png" height="30px"></img>
                             <span className="user">{this.state.user}</span>
                         </div>
+                    </div>
+                    <div className="comment">
+                        <Comments AnswerId={this.props.answer.id} Comments={this.props.answer.Comments}/>
                     </div>
                 </div>
             </div>

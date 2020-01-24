@@ -16,12 +16,20 @@ module.exports = {
       name: 'David Miller',
       password: `${Hash.generate("David")}`,
       mail: 'davidmiller@gmail.com'
+    }, {
+      name: 'Andrew Young',
+      password: `${Hash.generate("Andrew")}`,
+      mail: 'andrewyoung@gmail.com'
+    }, {
+      name: 'Sneh',
+      password: `${Hash.generate("Sneh")}`,
+      mail: 'sneh@gmail.com'
     }], {});
 
   },
 
   down: (queryInterface, Sequelize) => {
-    
+
     return queryInterface.bulkDelete('Users', null, {});
 
   }

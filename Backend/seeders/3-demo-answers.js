@@ -18,7 +18,19 @@ I have done a quick minimal test and it seemed to work great`,
       updatedAt: new Date(),
       UserId: 1,
       QuestionId: 3
-    }], {});
+    }, {
+      content: `It's Work For Me :
+
+      android:windowSoftInputMode="adjustResize"
+
+And Set Padding Of Your Recyclerview Bottom Padding.
+      
+      padding:20`,
+      reputations: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      UserId: 2,
+      QuestionId: 4}], {});
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('Answers', null, {});

@@ -4,7 +4,7 @@ module.exports = app => {
     const Answers = require('../controllers/ansController')
     const Tags = require('../controllers/tagController')
     const Users = require('../controllers/userController')
-    const Upvotes = require('../models').Upvotes;
+    const Comments = require('../controllers/cmntController')
     const jwt = require('jsonwebtoken')
 
 
@@ -15,16 +15,14 @@ module.exports = app => {
                 let tokenAuth = jwt.verify(token, Key.tokenKey)
                 let { exp } = tokenAuth
                 if (exp > Date.now() / 1000) {
-
-                    let UserId = await Users.getId(token)
-                    UserId = UserId.dataValues.id
+                    let UserId = (await Users.getId(token)).dataValues.id
                     req.body.UserId = UserId;
                     next()
-
                 } else {
                     res.send('401')
                 }
             } catch (err) {
+                console.log(err)
                 res.send('401')
             } else {
             res.send('401')
@@ -44,9 +42,21 @@ module.exports = app => {
         res.send(promise)
     })
 
-    app.get('/getQuestion', async (req, res) => {
+    app.get('/getAllQuestion', async (req, res) => {
         let { Tag } = req.query;
-        let promise = await Questions.getQuestion(Tag);
+        let promise = await Questions.getAllQuestion(Tag);
+        res.send(promise)
+    })
+
+    app.get('/getUserQuestion', checkToken, async (req, res) => {
+        let { UserId } = req.body
+        let promise = await Questions.getAllUserQuestion(UserId);
+        res.send(promise)
+    })
+
+    app.get('/getQuestion', async (req, res) => {
+        let { id } = req.query;
+        let promise = await Questions.getQuestion(id);
         res.send(promise)
     })
 
@@ -55,6 +65,12 @@ module.exports = app => {
         if (typeof (promise) === 'number')
             res.send({ flag: true })
         res.send(promise);
+    })
+
+    app.get('/checkUpvote', checkToken, async (req, res) => {
+        let UserId = req.body.UserId;
+        let resp = await Questions.checkUpvote(UserId, req.query.id)
+        res.send(resp)
     })
 
 
@@ -88,6 +104,13 @@ module.exports = app => {
         res.send(result);
     })
 
+    app.get('/getAnswerCount', async (req, res) => {
+        let { id } = req.query;
+
+        let promise = await Answers.getAnswerCount(id)
+        res.send(promise);
+    })
+
     app.get('/getAnswer', async (req, res) => {
         let { id } = req.query;
 
@@ -117,18 +140,10 @@ module.exports = app => {
         res.send(promise);
     })
 
-    app.get('/reputation', checkToken, async (req, res) => {
-        let UserId = req.body.UserId;
-        Upvotes.findAll({
-            attributes: ['QuestionId'],
-            where: {
-                UserId
-            }
-        }).then((resp) => {
-            res.send(resp)
-        }).catch((err) =>
-            console.log('Error', err))
-
+    app.get('/User', checkToken, async (req, res) => {
+        let { UserId } = req.body
+        let promise = await Users.getUserDetails(UserId)
+        res.send(promise)
     })
 
     app.get('/logout', checkToken, (req, res) => {
@@ -136,8 +151,9 @@ module.exports = app => {
         res.send(pro)
     })
 
+
     app.get('/', checkToken, (req, res) => {
-        res.send(req.body.id)
+        res.send({validUser: true})
     })
 
     app.get('/Search', async (req, res) => {
@@ -146,4 +162,13 @@ module.exports = app => {
         res.send(promise)
     })
 
+    //Comment
+    app.post('/addComment', checkToken, async (req, res) => {
+        req.body.createdAt = new Date();
+        req.body.updatedAt = new Date();
+
+        let result = await Comments.addComment(req.body)
+        console.log(result)
+        res.send(result)
+    })
 }

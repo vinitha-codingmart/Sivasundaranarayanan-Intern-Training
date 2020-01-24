@@ -14,10 +14,12 @@ Questions.addQuestion = (questions) => {
     return resp;
 }
 
-Questions.getQuestion = (tag) => {
-    var promise;
+Questions.getAllQuestion = (tag) => {
+    var promise
     if (!tag)
-        promise = Question.findAll()
+        promise = Question.findAll({
+            attributes: ['title', 'id', 'reputations']
+        })
     else
         promise = Question.findAll({
             include: [{
@@ -28,8 +30,34 @@ Questions.getQuestion = (tag) => {
                 }
             }]
         })
-    console.log(promise)
+
+    return promise
+
+}
+
+Questions.getQuestion = (id) => {
+    var promise = Question.findAll({
+        where: {
+            id
+        },
+        include: [{
+            model: model.Answers,
+            include: [{
+                model: model.Comments
+            }]
+        }]
+    })
     return promise;
+}
+
+Questions.getAllUserQuestion = (UserId) => {
+    var promise = Question.findAll({
+        where: {
+            UserId
+        }
+    })
+
+    return promise
 }
 
 Questions.updateRep = (data) => {
@@ -66,7 +94,7 @@ Questions.search = (text) => {
         limit: 10,
         include: [{
             model: model.Tags,
-            attributes: ['tag','QuestionId']
+            attributes: ['tag', 'QuestionId']
         }],
         where:
         {
@@ -83,5 +111,15 @@ Questions.search = (text) => {
     return promise
 }
 
+Questions.checkUpvote = async (UserId, QuestionId) => {
+    let promise = await Upvotes.findOne({
+        attributes: ['id'],
+        where: {
+            UserId,
+            QuestionId
+        }
+    })
+    return promise
+}
 
 module.exports = Questions

@@ -8,7 +8,6 @@
 }
 
 .answer::before {
-    
     width: 100%;
     content: "";
     box-sizing: border-box;
@@ -38,9 +37,23 @@
     float: right;
 }
 
-.user{
+.Options {
+    margin: .75rem .75rem;
+}
+
+.user {
     float: right;
     font-size: .9rem;
     color: #0077CC;
     font-weight: 600;
+}
+
+.comment {
+    color: #0077cc;
+    text-transform: lowercase;
+    margin: 3rem .5rem;
+}
+
+.comment span:hover {
+    color: #0095ff;
 }

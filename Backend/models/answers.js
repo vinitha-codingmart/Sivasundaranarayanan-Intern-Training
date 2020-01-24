@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     Answers.belongsTo(models.Questions);
     Answers.belongsTo(models.Users);
     Answers.hasMany(models.Upvotes);
+    Answers.hasMany(models.Comments);
   };
 
   return Answers;

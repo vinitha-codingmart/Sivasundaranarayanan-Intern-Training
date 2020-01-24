@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     Users.hasMany(models.Questions)
     Users.hasMany(models.Answers)
     Users.hasMany(models.Upvotes)
+    Users.hasMany(models.Comments)
   };
   return Users;
 };

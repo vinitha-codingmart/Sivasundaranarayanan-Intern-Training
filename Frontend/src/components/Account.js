@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+
 import '../style/Account.css'
 
-export default class Account extends Component {
+class Account extends Component {
+
+    OpenAccount = () => {
+        this.props.history.push('/users')
+    }
 
     render() {
         return (
 
-            <div onClick={this.props.clickEvent} className="account" style={this.props.style}>    
-                <img alt="Account" src="account.png" height="32" />
+            <div onClick={this.OpenAccount} className="account" style={this.props.style}>
+                <img alt="Account" src="/account.png" height="32" />
             </div>
         )
     }
 }
+
+export default withRouter(Account)

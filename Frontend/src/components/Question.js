@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from './Button';
 
 import '../style/Question.css'
 
@@ -7,24 +6,26 @@ import axios from 'axios';
 import Answers from './Answers';
 import Reputation from './Reputation';
 import Tag from './Tag';
+import { Link } from 'react-router-dom';
+import Option from './Option';
 
-export class Question extends React.Component {
+export default class Question extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            Upvote: this.props.Upvote,
-            reputation: this.props.Question.reputations,
-            addAnswer: false,
+            Upvote: props.Upvote,
+            reputation: props.Question.reputations,
             tags: [],
             name: '',
         }
     }
 
-    addAnswer = () => {
-        this.setState({
-            addAnswer: true
-        });
+    componentDidUpdate() {
+        if (this.state.Upvote !== this.props.Upvote)
+            this.setState({
+                Upvote: this.props.Upvote
+            })
     }
 
     getDate = (mDate) => {
@@ -68,10 +69,10 @@ export class Question extends React.Component {
     getUserName = (id) => {
         axios.get(`http://localhost:3001/getUserName?UserId=${id}`, {
         }).then((res) => {
-            let name = res.data[0].name;
-            this.setState({
-                name
-            })
+            if (res.data)
+                this.setState({
+                    name: res.data.name
+                })
         })
     }
 
@@ -82,12 +83,6 @@ export class Question extends React.Component {
             this.setState({
                 tags: res.data
             })
-        })
-    }
-
-    cancelAnswer = () => {
-        this.setState({
-            addAnswer: false
         })
     }
 
@@ -107,10 +102,6 @@ export class Question extends React.Component {
 
         let reputations = this.state.reputation;
 
-        let btnStyle = {
-            display: (this.state.addAnswer) ? 'none' : 'block'
-        };
-
         return (
             <div className="question" >
                 <span className="header">{title}</span>
@@ -125,21 +116,22 @@ export class Question extends React.Component {
                         <pre className="description">{description}</pre>
                         <div style={{ display: 'inline-block', marginLeft: '10px' }}>
                             {
-                                this.state.tags.map((tag, index) => <Tag clickEvent={this.props.filterFunction} key={index}>{tag.tag}</Tag>)
+                                this.state.tags.map((tag, index) => <Link to="/" key={index}> <Tag clickEvent={this.props.filterFunction}>{tag.tag}</Tag></Link>)
                             }
                         </div>
-
+                        <div style={{marginLeft: '1.25rem', marginTop: '1.5rem'}}>
+                            <Option styleName="cmtGrey">delete</Option>
+                        </div>
                     </div>
                 </div>
                 <div className="user-details">
                     <span className="ask">asked {this.getDate(createdAt)}</span>
                     <div style={{ display: 'flex', alignItems: 'flex-start', color: "#0077CC" }}>
-                        <img style={{ marginBottom: "10px", marginRight: '10px' }} alt="display pic" src='1.jpg' height="40" width="40" />
+                        <img style={{ marginBottom: "10px", marginRight: '10px' }} alt="display pic" src='/1.jpg' height="40" width="40" />
                         <span style={{ fontSize: ".9rem" }}>{this.state.name}</span>
                     </div>
                 </div>
-                <Answers cancelEvent={this.cancelAnswer} id={this.props.id} addArea={this.state.addAnswer} />
-                <Button styleName="blue" clickEvent={this.addAnswer} name="Answer!" style={btnStyle} />
+                <Answers cancelEvent={this.cancelAnswer} Answer={this.props.Question.Answers} id={this.props.id} />
             </div>
         );
     }

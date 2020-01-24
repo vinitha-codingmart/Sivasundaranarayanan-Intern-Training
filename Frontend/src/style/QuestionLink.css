@@ -1,0 +1,41 @@
+.questionLink {
+    display: flex;
+}
+
+.questionLink .questions {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    align-items: flex-start;
+}
+
+.questionLink .title {
+    color: #0064bd;
+    cursor: pointer;
+}
+
+.questionLink .title:hover{
+    color: #0095FF;
+}
+
+.AnswerCount,.quesRep {
+    border-radius: 5px;
+    border: 1px solid transparent;
+    padding: 8px;
+    height: 2rem;
+    display: flex;
+    flex-direction: column;
+    color: #6A737C;
+    font-size: .625rem;
+    margin: 5px;
+}
+
+.AnswerCount span ,.quesRep span {
+    font-size: .8725rem;
+    margin-bottom: .25rem;
+}
+
+.questionLink .answered {
+    border: 1px solid #48A868;
+    color: #48A868;
+}

@@ -28,6 +28,11 @@ export default class TopNav extends Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.id !== this.props.id)
+            this.getUser()
+    }
+
     getUser = () => {
         let token = localStorage.getItem('User')
         if (token) {
@@ -38,20 +43,16 @@ export default class TopNav extends Component {
                     this.setState({
                         authState: true
                     })
+                else {
+                    localStorage.removeItem('User')
+                }
             })
         }
-    }
-
-    removeUser = () => {
-        Axios.get('http://localhost:3001/logout', {
-            headers: { Authorization: `bearer ${localStorage.getItem('User')}` }
-        }).then((res) => {
-            localStorage.removeItem('User');
+        else {
             this.setState({
                 authState: false
             })
-            this.props.refresh();
-        })
+        }
     }
 
     openModal = () => {
@@ -89,6 +90,10 @@ export default class TopNav extends Component {
         })
     }
 
+    handleClear = () => {
+        this.setState({ SearchText: '', showSearch: false })
+    }
+
     handleItemAdd = () => {
         this.props.refresh();
         this.closeModal();
@@ -108,7 +113,7 @@ export default class TopNav extends Component {
         return (
             <div className="topNav">
                 <div style={{ width: '13%' }}>
-                    <Logo alt="Stack Overflow" height="40px" width="160px" src="logo.svg" />
+                    <Logo alt="Stack Overflow" height="40px" width="160px" src="/logo.svg" />
                 </div>
                 <div style={{ width: '7%' }}>
                     <Links text="Products" />
@@ -120,7 +125,7 @@ export default class TopNav extends Component {
                 <div style={bAuth}>
 
                     <Button style={{ width: '70%' }} clickEvent={this.openModal} styleName="blue" name="Ask Question" />
-                    <Account clickEvent={this.removeUser} />
+                    <Account />
 
                 </div>
                 <div style={aAuth}>
@@ -129,7 +134,7 @@ export default class TopNav extends Component {
                     </Link>
                 </div>
 
-                <Dropdown visibility={this.state.showSearch} result={this.state.SearchContent} />
+                <Dropdown clear={this.handleClear} visibility={this.state.showSearch} result={this.state.SearchContent} />
 
                 <Modal title="Ask a Question" addEvent={this.handleItemAdd} closeEvent={this.closeModal} show={this.state.isShowing} />
             </div >

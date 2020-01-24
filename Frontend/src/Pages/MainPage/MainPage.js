@@ -5,6 +5,9 @@ import Axios from 'axios';
 
 import './MainPage.css'
 import TopNav from '../TopNav/TopNav';
+import { Switch, Route, useParams } from 'react-router';
+import QuestionPage from '../QuestionPage/QuestionPage';
+import UserPage from '../UserPage/UserPage';
 
 export default class MainPage extends Component {
 
@@ -13,14 +16,12 @@ export default class MainPage extends Component {
         this.state = {
             Apiresponse: {
                 questions: [],
-                Upvotes: []
-            },
-            flag: false
+            }
         }
     }
 
     callApi = () => {
-        Axios.get('http://localhost:3001/getQuestion')
+        Axios.get('http://localhost:3001/getAllQuestion')
             .then((res) => {
                 if (res.data[0]) {
                     this.setState({
@@ -30,31 +31,11 @@ export default class MainPage extends Component {
                         }
                     })
                 }
-            }).then(() => {
-                let token = localStorage.getItem('User')
-                Axios.get('http://localhost:3001/reputation', {
-                    headers: {
-                        Authorization: `bearer ${token}`
-                    }
-                }).then((res) => {
-                    if (res.data !== 401) {
-                        this.setState({
-                            Apiresponse: {
-                                ...this.state.Apiresponse,
-                                Upvotes: res.data,
-                            },
-                            flag: true
-                        })
-                    } else {
-                        this.setState({
-                            flag: true
-                        })
-                    }
-                })
-            });
+            })
     }
 
     filterFunction = (index) => {
+        this.props.history.push('/')
         this.setState({
             Apiresponse: {
                 questions: [],
@@ -65,7 +46,7 @@ export default class MainPage extends Component {
     }
 
     filterQuestion = (tag) => {
-        Axios.get(`http://localhost:3001/getQuestion?Tag=${tag}`
+        Axios.get(`http://localhost:3001/getAllQuestion?Tag=${tag}`
         ).then((res) => {
             this.setState({
                 Apiresponse: {
@@ -73,28 +54,7 @@ export default class MainPage extends Component {
                     Upvotes: []
                 }
             })
-        }).then(() => {
-            let token = localStorage.getItem('User')
-            Axios.get('http://localhost:3001/reputation', {
-                headers: {
-                    Authorization: `bearer ${token}`
-                }
-            }).then((res) => {
-                if (res.data !== 401) {
-                    this.setState({
-                        Apiresponse: {
-                            ...this.state.Apiresponse,
-                            Upvotes: res.data,
-                        },
-                        flag: true
-                    })
-                } else {
-                    this.setState({
-                        flag: true
-                    })
-                }
-            })
-        });
+        })
     }
 
     componentDidMount() {
@@ -104,15 +64,35 @@ export default class MainPage extends Component {
     render() {
         return (
             <div>
-                <TopNav refresh={this.callApi} />
-                {(this.state.flag) &&
-                    <div className="main">
-                        <Content filterFunction={this.filterFunction} response={this.state.Apiresponse} />
-                        <SideNav filterFunction={this.filterFunction} />
-                    </div>
-                }
+                <div className="main">
+                    <Switch>
+                        <Route exact path="/">
+                            <TopNav refresh={this.callApi} id={1} />
+                            <Content filterFunction={this.filterFunction} response={this.state.Apiresponse} />
+                            <SideNav filterFunction={this.filterFunction} />
+                        </Route>
+
+                        <Route path="/question/:id" children={<Child callApi={this.callApi} filterFunction={this.filterFunction} />} />
+
+                        <Route exact path="/users">
+                            <TopNav refresh={this.callApi} id={3} />
+                            <UserPage filterFunction={this.filterFunction} />
+                        </Route>
+
+                    </Switch>
+                </div>
             </div>
 
         )
     }
+}
+
+function Child(props) {
+    let { id } = useParams()
+    return (
+        <div>
+            <TopNav refresh={props.callApi} id={2} />
+            <QuestionPage id={id} filterFunction={props.filterFunction} />
+        </div>
+    )
 }

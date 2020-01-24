@@ -12,6 +12,15 @@ Answers.addAnswer = (answer) => {
     return result;
 }
 
+Answers.getAnswerCount = (QuestionId) => {
+    var result = Answer.findAndCountAll({
+        where: {
+            QuestionId
+        }
+    })
+    return result;
+}
+
 Answers.getAnswer = (QuestionId) => {
     var promise = Answer.findAll({
         where: {

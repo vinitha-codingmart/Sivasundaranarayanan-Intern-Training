@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
 import DropQuestion from './DroplistQuestion';
+import {withRouter} from 'react-router-dom'
 
-export default class Droplist extends Component {
+ class Droplist extends Component {
+
+
+    OpenQuestion = (id) => {
+        this.props.history.push(`/question/${id}`)
+        this.props.clearNav()
+    }
+
     render() {
         let { Questions, keys, tag } = this.props
         let questions = []
@@ -9,17 +17,17 @@ export default class Droplist extends Component {
             if (keys.includes(Question.id))
                 questions.push(Question)
         });
-        console.log(tag)
-        questions.map((res, index) => console.log(index, res))
         return (
             <div className="Droplist">
                 <div className="Questions">
                     <span className="title">{tag}</span>
                     <div className="contents">
-                        {questions.map((question, index) => <DropQuestion reputation={question.reputations} key={index}>{question.title}</DropQuestion>)}
+                        {questions.map((question, index) => <DropQuestion clickEvent={e=>this.OpenQuestion(question.id)} reputation={question.reputations} key={index}>{question.title}</DropQuestion>)}
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+export default withRouter(Droplist)

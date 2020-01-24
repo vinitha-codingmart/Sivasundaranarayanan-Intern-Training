@@ -1,0 +1,20 @@
+.Option span {
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.cmtGrey {
+    color: #848D95;
+}
+
+.cmtGrey:hover {
+    color: #3c4146 !important;
+}
+
+.cmtBlue {
+    color: #0077CC;
+}
+
+.cmtBlue:hover {
+    color: #0095ff;
+}

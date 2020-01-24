@@ -1,0 +1,23 @@
+.CommentWrapper {
+    border-bottom: 1px solid #CFCFCF;
+    border-top: 1px solid #CFCFCF;
+    padding: 1rem 2rem;
+    font-size: 13px;
+}
+
+.CommentContent {
+    display: inline;
+    color: #242729;
+}
+
+.CommentUser {
+    display: inline;
+    text-transform: none;
+}
+
+.CommentTime {
+    float: right;
+    display: block;
+    text-transform: initial;
+    color: #A0A0A0;
+}

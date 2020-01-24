@@ -13,8 +13,8 @@ class App extends Component {
       <Router>
         <div className="App">
           <Switch>
-            <Route path="/" exact component={MainPage} />
             <Route path="/Auth" component={Auth} />
+            <Route path="/" component= {MainPage} />
           </Switch>
         </div>
       </Router>

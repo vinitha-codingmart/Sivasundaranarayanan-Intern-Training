@@ -25,7 +25,7 @@ export default class Dropdown extends Component {
                 <div className="Tags">
                     {(Object.keys(Tags) &&
                         Object.keys(Tags).map((key, index) =>
-                            <Droplist key={index} tag={key} Questions={Questions} keys={Tags[key]} />
+                            <Droplist clearNav={this.props.clear} key={index} tag={key} Questions={Questions} keys={Tags[key]} />
                         )
                     )}
                 </div>

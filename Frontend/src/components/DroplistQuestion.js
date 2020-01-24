@@ -6,7 +6,7 @@ export default class DropQuestion extends Component {
         return (
             <div className="droplist">
                 <div className="drop-rep">{this.props.reputation}</div>
-                <span>{this.props.children}</span>
+                <span onClick={this.props.clickEvent}>{this.props.children}</span>
             </div>
         )
     }

@@ -1,4 +1,19 @@
 .Content-wrapper {
-    margin-top: 5rem;
+    margin: 0 2.5rem;
+    padding: 1rem 0;
+    border-left: 1px solid #CFCFCF;
     width: 75%;
+    border-bottom: 1px solid #CFCFCF;
+}
+
+.Content-header {
+    text-align: left;
+    font-size: 1.75rem;
+    padding: 2rem 2rem;
+    margin: 1.5rem 0;
+    border-bottom: 1px solid #CFCFCF;
+}
+
+.Content-main {
+    padding: 0 2rem;
 }

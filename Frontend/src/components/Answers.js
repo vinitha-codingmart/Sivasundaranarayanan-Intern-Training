@@ -10,7 +10,7 @@ export default class Answers extends Component {
         super(props)
         this.state = {
             content: '',
-            answers: []
+            answers: this.props.Answer
         }
     }
 
@@ -25,19 +25,6 @@ export default class Answers extends Component {
             .then((res) => this.fetchAnswers())
             .then(() => this.setState({ content: '' }, () => this.props.cancelEvent()))
 
-    }
-
-    fetchAnswers = () => {
-        Axios.get(`http://localhost:3001/getAnswer?id=${this.props.id}`)
-            .then((res) => {
-                this.setState({
-                    answers: res.data
-                });
-            })
-    }
-
-    componentDidMount() {
-        this.fetchAnswers();
     }
 
     updateText = event => {
@@ -56,24 +43,25 @@ export default class Answers extends Component {
     }
 
     render() {
-        let areaStyle = {
-            width: (this.props.addArea) ? '100%' : '0',
-            height: (this.props.addArea) ? '50%' : '0',
-            display: (this.props.addArea) ? 'block' : 'none'
-        };
+
+
+        let { length } = this.state.answers
+
         return (
             <div className="answerBox" >
-                <span className="answerCount">{this.getCount([this.state.answers.length])}</span>
+                <span className="answerCount">
+                    {(length > 0) ? `${length} Answer ${(length - 1) ? 's' : ''} ` : ''}
+                </span>
                 {
                     this.state.answers.map((answer, index) =>
                         <Answer key={index} id={answer.aid} answer={answer}></Answer>
                     )
                 }
-                < div style={areaStyle} >
-                    <textarea value={this.state.content} onChange={this.updateText} className="aBox" ></textarea>
-                    <Button styleName="blue" name="Add" clickEvent={this.addAnswer} />
-                    <Button styleName="grey" name="Cancel" clickEvent={this.props.cancelEvent} />
-                </div >
+                <div className="aBox">
+                    <span>Your Answer</span>
+                    <textarea placeholder="Enter your answer here..." value={this.state.content} onChange={this.updateText} ></textarea>
+                    <Button styleName="blue" name="Post Your Answer" clickEvent={this.addAnswer} />
+                </div>
             </div >
         )
     }

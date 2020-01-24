@@ -28,6 +28,25 @@ How could I do this insertion? Do I have to set the id manually?`,
       createdAt: new Date(),
       updatedAt: new Date(),
       UserId: 2
+    }, {
+      title: 'Soft keyboard: Adjust_Resize pushing content offscreen',
+      description: `i'm build a messaging like application, but I am having some issue with the keyboard pushing up content wrong.
+What I want is for the content to be pushed upward exactly as much as the keyboard is tall, and for me to be able to freely scroll upward to view all the previous messages. Just like most messaging apps.`,
+      reputations: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      UserId: 4
+    }, {
+      title: 'Best way to generate swagger doc from existing Nodejs express app',
+      description: `There is a nodejs express app built using TypeScript. I found that there are 2 modules which auto-generates the swagger document : swagger-jsdoc and tsoa
+
+Note that, there are no comments added into the code.Please suggest the pros and cons of both and which among these is a better approach so that we can implement it with lesser changes.      
+
+Also, suggest if there are any other modules apart from these two.`,
+      reputations: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      UserId: 5
     }], {})
   },
 

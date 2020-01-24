@@ -30,6 +30,27 @@ module.exports = {
     }, {
       Tag: 'sequelize.js',
       QuestionId: 3
+    }, {
+      Tag: 'java',
+      QuestionId: 4
+    }, {
+      Tag: 'android',
+      QuestionId: 4
+    }, {
+      Tag: 'android-studio',
+      QuestionId: 4
+    }, {
+      Tag: 'kotlin',
+      QuestionId: 4
+    }, {
+      Tag: 'nodejs',
+      QuestionId: 5
+    }, {
+      Tag: 'express',
+      QuestionId: 5
+    }, {
+      Tag: 'swagger',
+      QuestionId: 5
     }], {});
 
   },
