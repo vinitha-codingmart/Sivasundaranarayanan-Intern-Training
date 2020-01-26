@@ -45,4 +45,17 @@ Tags.addTag = (tags, QuestionId) => {
     return data;
 }
 
+Tags.deleteTagByQuestionId = async (QuestionId) => {
+    let promise = await Tag.findOne({ where: { QuestionId } })
+    let tags = [], tag
+
+    while (promise) {
+        tag = await promise.destroy()
+        tags.push(tag)
+        promise = await Tag.findOne({ where: { QuestionId } })
+    }
+
+    return tags
+}
+
 module.exports = Tags

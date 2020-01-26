@@ -16,22 +16,31 @@ export default class MainPage extends Component {
         this.state = {
             Apiresponse: {
                 questions: [],
-            }
+            },
+            isMounted: true
         }
     }
 
+    componentWillUnmount() {
+        this.setState({
+            isMounted: false
+        })
+    }
+
     callApi = () => {
-        Axios.get('http://localhost:3001/getAllQuestion')
-            .then((res) => {
-                if (res.data[0]) {
-                    this.setState({
-                        Apiresponse: {
-                            questions: res.data,
-                            Upvotes: []
-                        }
-                    })
-                }
-            })
+        if (this.state.isMounted) {
+            Axios.get('http://localhost:3001/getAllQuestion')
+                .then((res) => {
+                    if (res.data[0]) {
+                        this.setState({
+                            Apiresponse: {
+                                questions: res.data,
+                                Upvotes: []
+                            }
+                        })
+                    }
+                })
+        }
     }
 
     filterFunction = (index) => {
@@ -58,7 +67,8 @@ export default class MainPage extends Component {
     }
 
     componentDidMount() {
-        this.callApi()
+        
+        this.setState({ isMounted: true }, this.callApi())
     }
 
     render() {
@@ -68,7 +78,7 @@ export default class MainPage extends Component {
                     <Switch>
                         <Route exact path="/">
                             <TopNav refresh={this.callApi} id={1} />
-                            <Content filterFunction={this.filterFunction} response={this.state.Apiresponse} />
+                            <Content refresh={this.callApi} filterFunction={this.filterFunction} response={this.state.Apiresponse} />
                             <SideNav filterFunction={this.filterFunction} />
                         </Route>
 
@@ -90,7 +100,7 @@ export default class MainPage extends Component {
 function Child(props) {
     let { id } = useParams()
     return (
-        <div>
+        <div style={{ width: '100%' }}>
             <TopNav refresh={props.callApi} id={2} />
             <QuestionPage id={id} filterFunction={props.filterFunction} />
         </div>

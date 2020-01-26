@@ -1,7 +1,9 @@
 const model = require('../models')
+const Answers = require('./ansController')
 const Question = model.Questions
 const Upvotes = model.Upvotes
 const Op = require('sequelize').Op
+const Tags = require('./tagController')
 
 Questions = () => {
 
@@ -60,7 +62,7 @@ Questions.getAllUserQuestion = (UserId) => {
     return promise
 }
 
-Questions.updateRep = (data) => {
+Questions.updateRep = async (data) => {
     let { id, reputations, UserId, flag } = data;
     var promise = Question.update({
         reputations
@@ -70,20 +72,22 @@ Questions.updateRep = (data) => {
         }
     })
     if (promise) {
-        if (flag)
-            promise = Upvotes.create({
+        if (flag) {
+            promise = await Upvotes.create({
                 QuestionId: id,
                 UserId,
                 AnswerId: 0
             })
-        else
-            promise = Upvotes.destroy({
+        }
+        else {
+            promise = await Upvotes.destroy({
                 where: {
                     QuestionId: id,
                     UserId
                 }
+
             })
-        return promise;
+        }
     } else
         return null
 }
@@ -120,6 +124,14 @@ Questions.checkUpvote = async (UserId, QuestionId) => {
         }
     })
     return promise
+}
+
+Questions.deleteQuestion = async (id) => {
+    let promise = await Answers.deleteAnswerByQuestionId(id)
+    promise = await Tags.deleteTagByQuestionId(id)
+    promise = await Upvotes.destroy({ where: { QuestionId: id } })
+    promise = await Question.destroy({ where: { id } })
+    return [promise];
 }
 
 module.exports = Questions

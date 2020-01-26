@@ -5,8 +5,12 @@ import QuestionLink from '../../components/QuestionLink';
 
 export default class Content extends Component {
 
-    render() {
+    constructor(props) {
+        super(props);
+        props.refresh();
+    }
 
+    render() {
         return (
             <div className="Content-wrapper" >
                 <div className="Content-header">Questions</div>

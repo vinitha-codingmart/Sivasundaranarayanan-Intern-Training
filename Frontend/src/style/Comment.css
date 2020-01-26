@@ -6,6 +6,7 @@
 }
 
 .CommentContent {
+    text-transform: none;
     display: inline;
     color: #242729;
 }

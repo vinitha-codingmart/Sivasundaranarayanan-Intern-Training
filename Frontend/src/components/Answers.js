@@ -16,14 +16,47 @@ export default class Answers extends Component {
 
     addAnswer = () => {
         let token = localStorage.getItem('User')
-        Axios.post('http://localhost:3001/addAnswer', {
-            QuestionId: this.props.id,
-            content: this.state.content
-        }, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
-            .then((res) => this.fetchAnswers())
-            .then(() => this.setState({ content: '' }, () => this.props.cancelEvent()))
+        if (token)
+            Axios.post('http://localhost:3001/addAnswer', {
+                QuestionId: this.props.id,
+                content: this.state.content
+            }, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            }).then((res) => {
+                if (res.data !== 401) {
+                    let data = res.data
+                    data.Comments = []
+                    this.state.answers.push(data)
+                } else {
+                    alert('Login to answer this question')
+                }
+            }).then(() => {
+                this.setState({ content: '' })
+            })
+        else
+            alert('Login to answer this question')
+    }
+
+    deleteAnswer = (index) => {
+        let permission = window.confirm("Do you want to delete the answer")
+        let token = localStorage.getItem('User')
+        if (permission && token)
+            Axios.post('http://localhost:3001/deleteAnswer', {
+                id: this.state.answers[index].id
+            }, {
+                headers: {
+                    Authorization: `bearer ${token}`
+                }
+            }).then((res) => {
+                if (res.data !== '401' && res.data.id) {
+                    let { answers } = this.state
+                    answers.splice(index, 1)
+                    this.setState({
+                        answers
+                    })
+                }
+            })
+
 
     }
 
@@ -50,11 +83,11 @@ export default class Answers extends Component {
         return (
             <div className="answerBox" >
                 <span className="answerCount">
-                    {(length > 0) ? `${length} Answer ${(length - 1) ? 's' : ''} ` : ''}
+                    {(length > 0) ? `${length} Answer${(length - 1) ? 's' : ''} ` : ''}
                 </span>
                 {
                     this.state.answers.map((answer, index) =>
-                        <Answer key={index} id={answer.aid} answer={answer}></Answer>
+                        <Answer deleteFunction={e => this.deleteAnswer(index)} key={index} id={answer.aid} answer={answer}></Answer>
                     )
                 }
                 <div className="aBox">

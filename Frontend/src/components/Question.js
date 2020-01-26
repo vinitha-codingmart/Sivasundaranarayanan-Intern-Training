@@ -2,34 +2,50 @@ import React from 'react'
 
 import '../style/Question.css'
 
-import axios from 'axios';
 import Answers from './Answers';
 import Reputation from './Reputation';
 import Tag from './Tag';
 import { Link } from 'react-router-dom';
 import Option from './Option';
+import Axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
-export default class Question extends React.Component {
+class Question extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            Upvote: props.Upvote,
+            Upvote: false,
             reputation: props.Question.reputations,
             tags: [],
             name: '',
+            validUser: false
         }
     }
 
-    componentDidUpdate() {
-        if (this.state.Upvote !== this.props.Upvote)
-            this.setState({
-                Upvote: this.props.Upvote
-            })
+
+    checkUpvote = (id) => {
+        let token = localStorage.getItem('User')
+        if (token) {
+            Axios.get(`http://localhost:3001/checkUpvote?id=${id}&type=ques`,
+                {
+                    headers: {
+                        Authorization: `bearer ${token}`
+                    }
+                }).then(res => {
+                    if (res.data && res.data !== 401) {
+                        this.setState({
+                            Upvote: true
+                        })
+                    }
+                })
+        }
     }
 
     getDate = (mDate) => {
-        return new Date(mDate).toLocaleDateString();
+        var dateOptions = { year: "numeric", month: "short", day: "2-digit" };
+        let date = new Date(mDate).toLocaleDateString('en-US', dateOptions)
+        return date;
     }
 
     reputeQuestion = (forUp) => {
@@ -38,7 +54,7 @@ export default class Question extends React.Component {
             let id = this.props.id
             let token = localStorage.getItem("User")
             if (rep + 1) {
-                axios.put('http://localhost:3001/updateQuesRep', {
+                Axios.put('http://localhost:3001/updateQuesRep', {
                     reputations: rep,
                     id: id,
                     flag: (forUp < 0) ? false : true
@@ -47,12 +63,14 @@ export default class Question extends React.Component {
                         Authorization: `bearer ${token}`
                     }
                 }).then((res) => {
+                    console.log(res)
                     if (res.data !== 401)
                         if (!res.data.flag) {
+                            console.log(true)
                             this.setState({
                                 reputation: rep,
                                 Upvote: true
-                            })
+                            }, console.log(this.state))
                         } else {
                             this.setState({
                                 reputation: rep,
@@ -67,7 +85,7 @@ export default class Question extends React.Component {
     }
 
     getUserName = (id) => {
-        axios.get(`http://localhost:3001/getUserName?UserId=${id}`, {
+        Axios.get(`http://localhost:3001/getUserName?UserId=${id}`, {
         }).then((res) => {
             if (res.data)
                 this.setState({
@@ -78,7 +96,7 @@ export default class Question extends React.Component {
 
     getTag = () => {
         let id = this.props.Question.id;
-        axios.get(`http://localhost:3001/getTag?id=${id}`
+        Axios.get(`http://localhost:3001/getTag?id=${id}`
         ).then((res) => {
             this.setState({
                 tags: res.data
@@ -86,21 +104,65 @@ export default class Question extends React.Component {
         })
     }
 
-    componentDidMount() {
-        this.getTag();
-        this.getUserName(this.props.Question.UserId)
+
+    verifyCurrentUser = (id) => {
+        let token = localStorage.getItem('User')
+        if (token) {
+            Axios.get(`http://localhost:3001/?id=${id}`, {
+                headers: {
+                    Authorization: `bearer ${token}`
+                }
+            }).then((res) => {
+                if (res.data && res.data !== '401')
+                    this.setState({
+                        validUser: true
+                    })
+                else
+                    this.setState({
+                        validUser: false
+                    })
+            })
+        } else {
+            this.setState({
+                validUser: false
+            })
+        }
     }
 
-    UNSAFE_componentWillReceiveProps() {
-        this.setState({
-            Upvote: this.props.Upvote
-        })
+    deleteQuestion = () => {
+        let confirm = window.confirm("Do you want to delete the Question")
+        let token = localStorage.getItem('User')
+        if (confirm && token) {
+            Axios.put('http://localhost:3001/deleteQuestion', {
+                id: this.props.Question.id
+            }, {
+                headers: {
+                    Authorization: `bearer ${token}`
+                }
+            }).then(res => {
+                if (res.data && res.data !== '401')
+                    this.props.history.push('/')
+            })
+        }
+    }
+
+    componentDidMount() {
+        this.checkUpvote(this.props.Question.id)
+        this.getTag();
+        this.getUserName(this.props.Question.UserId)
+        this.verifyCurrentUser(this.props.Question.UserId)
     }
 
     render() {
         let { title, description, createdAt } = this.props.Question;
 
         let reputations = this.state.reputation;
+
+        let delStyle = {
+            marginLeft: '1.25rem',
+            marginTop: '1.5rem',
+            display: this.state.validUser ? 'block' : "none"
+        }
 
         return (
             <div className="question" >
@@ -119,13 +181,13 @@ export default class Question extends React.Component {
                                 this.state.tags.map((tag, index) => <Link to="/" key={index}> <Tag clickEvent={this.props.filterFunction}>{tag.tag}</Tag></Link>)
                             }
                         </div>
-                        <div style={{marginLeft: '1.25rem', marginTop: '1.5rem'}}>
-                            <Option styleName="cmtGrey">delete</Option>
+                        <div style={delStyle}>
+                            <Option clickEvent={this.deleteQuestion} styleName="cmtGrey">delete</Option>
                         </div>
                     </div>
                 </div>
                 <div className="user-details">
-                    <span className="ask">asked {this.getDate(createdAt)}</span>
+                    <span className="ask">asked on{this.getDate(createdAt)}</span>
                     <div style={{ display: 'flex', alignItems: 'flex-start', color: "#0077CC" }}>
                         <img style={{ marginBottom: "10px", marginRight: '10px' }} alt="display pic" src='/1.jpg' height="40" width="40" />
                         <span style={{ fontSize: ".9rem" }}>{this.state.name}</span>
@@ -136,3 +198,5 @@ export default class Question extends React.Component {
         );
     }
 }
+
+export default withRouter(Question)

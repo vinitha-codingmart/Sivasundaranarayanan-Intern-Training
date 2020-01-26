@@ -21,6 +21,8 @@ export default class Comments extends Component {
         })
     }
 
+
+
     addComment = () => {
         let token = localStorage.getItem('User')
         if (token)
@@ -32,12 +34,15 @@ export default class Comments extends Component {
                     Authorization: `bearer ${token}`
                 }
             }).then((res) => {
-                console.log(res)
-                this.setState({
-                    Comments: [...this.state.Comments, res.data],
-                    addComment: false,
-                    comment: ""
-                })
+                if (res.data && res.data !== 401)
+                    this.setState({
+                        Comments: [...this.state.Comments, res.data],
+                        addComment: false,
+                        comment: ""
+                    })
+                else
+                    alert('Login to add comment')
+
             })
         else {
             alert('Login to add comment')

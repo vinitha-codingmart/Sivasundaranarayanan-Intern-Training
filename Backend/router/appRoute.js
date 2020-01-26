@@ -67,9 +67,10 @@ module.exports = app => {
         res.send(promise);
     })
 
-    app.get('/checkUpvote', checkToken, async (req, res) => {
-        let UserId = req.body.UserId;
-        let resp = await Questions.checkUpvote(UserId, req.query.id)
+
+    app.put('/deleteQuestion', checkToken, async (req, res) => {
+        let { id } = req.body;
+        let resp = await Questions.deleteQuestion(id)
         res.send(resp)
     })
 
@@ -118,9 +119,17 @@ module.exports = app => {
         res.send(promise);
     })
 
-    app.put('/updateAnsRep', checkToken, async (req, res, next) => {
+    app.put('/updateAnsRep', checkToken, async (req, res) => {
         let promise = await Answers.updateRep(req.body)
+        if (typeof (promise) === 'number')
+            res.send({ flag: true })
         res.send(promise);
+    })
+
+    app.post('/deleteAnswer', checkToken, async (req, res) => {
+        let { id } = req.body
+        let promise = await Answers.deleteAnswer(id)
+        res.send({ id: promise })
     })
 
 
@@ -151,15 +160,27 @@ module.exports = app => {
         res.send(pro)
     })
 
-
     app.get('/', checkToken, (req, res) => {
-        res.send({validUser: true})
+        let { id } = req.query
+        if (id)
+            res.send((id == req.body.UserId))
+        else
+            res.send({ validUser: true })
     })
 
     app.get('/Search', async (req, res) => {
         let { text } = req.query
-        let promise = await Questions.search(text)
-        res.send(promise)
+        let result = await Questions.search(text)
+        res.send(result)
+    })
+
+    app.get('/checkUpvote', checkToken, async (req, res) => {
+        let UserId = req.body.UserId, resp;
+        if (req.query.type === 'ques')
+            resp = await Questions.checkUpvote(UserId, req.query.id)
+        else if (req.query.type === 'ans')
+            resp = await Answers.checkUpvote(UserId, req.query.id)
+        res.send(resp)
     })
 
     //Comment
@@ -168,7 +189,6 @@ module.exports = app => {
         req.body.updatedAt = new Date();
 
         let result = await Comments.addComment(req.body)
-        console.log(result)
         res.send(result)
     })
 }

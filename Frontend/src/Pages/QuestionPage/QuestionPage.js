@@ -9,8 +9,7 @@ export default class QuestionPage extends Component {
         super(props)
         this.state = {
             id: props.id,
-            question: {},
-            Upvote: false
+            question: {}
         }
     }
 
@@ -18,26 +17,9 @@ export default class QuestionPage extends Component {
         if (prevProps.id !== this.props.id) {
             this.setState({
                 question: {},
-                id: this.props.id
+                id: this.props.id,
+                Upvote: false
             }, this.initiateCall(this.props.id))
-        }
-    }
-
-    checkUpvote = (id) => {
-        let token = localStorage.getItem('User')
-        if (token) {
-            Axios.get(`http://localhost:3001/checkUpvote?id=${id}`,
-                {
-                    headers: {
-                        Authorization: `bearer ${token}`
-                    }
-                }).then(res => {
-                    console.log(res)
-                    if (res.data && res.data !== 401)
-                        this.setState({
-                            Upvote: true
-                        })
-                })
         }
     }
 
@@ -54,7 +36,6 @@ export default class QuestionPage extends Component {
 
 
     initiateCall = (id) => {
-        this.checkUpvote(id);
         this.getQuestion(id);
     }
 
@@ -68,7 +49,7 @@ export default class QuestionPage extends Component {
         return (
             <div className="QuestionPage">
                 {this.state.question.id &&
-                    <Question Upvote={this.state.Upvote} filterFunction={this.props.filterFunction} id={question.id} Question={question} />
+                    <Question filterFunction={this.props.filterFunction} id={question.id} Question={question} />
                 }
             </div>
         )

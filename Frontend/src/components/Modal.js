@@ -108,7 +108,7 @@ export class Modal extends React.Component {
                     <form>
                         <div className="modal-header">
                             <div className="close" onClick={this.props.closeEvent}>
-                                <img src="delete.svg" width="10" alt="Close" />
+                                <img src="/delete.svg" width="10" alt="Close" />
                             </div>
                             <h1>{this.props.title}</h1>
                         </div>
