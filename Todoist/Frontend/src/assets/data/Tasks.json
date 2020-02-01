@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "dueDate": "01-30-2020",
+    "title": "task 1",
+    "ProjectId": 1,
+    "priority": 4,
+    "completed": false,
+    "TaskId": null
+  },
+  {
+    "id": 2,
+    "dueDate": "01-31-2020",
+    "title": "task is the task of assigning the task",
+    "ProjectId": 1,
+    "priority": 1,
+    "completed": false,
+    "TaskId": 1
+  },
+  {
+    "id": 3,
+    "dueDate": "02-02-2020",
+    "title": "task 3",
+    "ProjectId": 1,
+    "priority": 3,
+    "completed": false,
+    "TaskId": 1
+  },
+  {
+    "id": 4,
+    "dueDate": "02-02-2020",
+    "title": "task 2",
+    "ProjectId": 1,
+    "priority": 2,
+    "completed": false,
+    "TaskId": 2
+  },
+  {
+    "id": 5,
+    "dueDate": "02-02-2020",
+    "title": "task 4",
+    "ProjectId": 2,
+    "priority": 1,
+    "completed": false,
+    "TaskId": null
+  }
+]

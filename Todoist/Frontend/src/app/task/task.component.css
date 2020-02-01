@@ -1,0 +1,139 @@
+.tasks {
+    padding: 10px 0;
+}
+
+.tasks .checkBox {
+    border-radius: 50%;
+    cursor: pointer;
+    color: transparent;
+    transition: all .25s ease;
+    margin: 10px 0;
+    box-sizing: border-box;
+    float: left;
+}
+
+.tasks span {
+    font-size: 14px;
+    margin: .25rem 0;
+    box-sizing: border-box;
+    display: inline-block;
+    align-self: center;
+}
+
+.tasks .taskDate {
+    font-size: 12px;
+    color: gray;
+}
+
+.taskContent {
+    display: flex;
+    flex-direction: row;
+}
+
+.tasksDescription {
+    margin-left: 1rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.tasksDescription .taskTitle {
+    width: 100%;
+}
+
+.tasksDescription .taskDate {
+    width: 100%;
+}
+
+.tasksDescription .today {
+    color: #058527;
+    text-transform: capitalize;
+}
+
+.MainTask {
+    display: flex;
+    flex-direction: row;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.dropDown {
+    margin: 0 10px;
+    color: gray;
+    cursor: pointer;
+}
+
+.dropDown:hover {
+    color: #212121;
+}
+
+.open {
+    transform: rotateZ(0deg);
+    transition: all .25s ease;
+}
+
+.close {
+    transition: all .25s ease;
+    transform: rotateZ(-90deg);
+}
+
+.show {
+    max-height: 100vh;
+    transition: all .25s ease;
+}
+
+.hide {
+    max-height: 0;
+    transition: all .25s ease;
+}
+
+.subTasks {
+    overflow: hidden;
+    margin-left: 2rem;
+}
+
+.tasksDescription .tomorrow {
+    text-transform: capitalize;
+    color: #eb8909
+}
+
+.tasksDescription .yesterday {
+    text-transform: capitalize;
+    color: #D1453B
+}
+
+.priority1 {
+    border: 2px solid #d1453b;
+}
+
+.priority1:hover {
+    color: #d1453b !important;
+    background-color: rgba(209, 69, 59, 0.2);
+}
+
+.priority2 {
+    border: 2px solid #eb8909;
+}
+
+.priority2:hover {
+    color: #eb8909 !important;
+    background-color: rgba(235, 137, 9, 0.2);
+}
+
+.priority3 {
+    border: 2px solid #246fe0;
+}
+
+.priority3:hover {
+    color: #246fe0 !important;
+    background-color: rgba(36, 111, 224, 0.2);
+}
+
+.priority4 {
+    border: 1px solid rgb(148, 142, 142);
+}
+
+.priority4:hover {
+    background-color: rgba(128, 128, 128, 0.2);
+    color: gray !important;
+}

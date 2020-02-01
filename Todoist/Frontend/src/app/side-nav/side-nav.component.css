@@ -1,0 +1,79 @@
+.sideNavWrapper {
+    background-color: #fafafa;
+    width: 266px;
+    height: calc(100vh - 100px);
+    padding-top: 35px;
+    border-right: 1px solid #f1f1f1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    cursor: pointer;
+    overflow: auto;
+}
+
+.active {
+    font-weight: 700;
+    background-color: #fff;
+}
+
+.sideNavItem {
+    outline: none;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+}
+
+.sideNavItem:hover {
+    background-color: #fff;
+}
+
+.sideNavItem svg {
+    padding: 5px;
+}
+
+.sideNavItemCount {
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: 100;
+}
+
+.DropDown {
+    /* display: flex; */
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.075);
+}
+
+.DropDown:hover {
+    background-color: #f7f7f7;
+}
+
+.DropDownButton {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 10px 50% 10px 0;
+    height: 24px;
+    box-sizing: content-box;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.DropDown svg {
+    padding: 0 5px;
+    color: rgba(0, 0, 0, 0.4);
+    transition: all .25s ease-in-out;
+}
+
+.DropDown .down {
+    transform: rotateZ(0deg);
+}
+
+.DropDown .up {
+    transform: rotateZ(-90deg);
+}
+
+.DropDownButton ~ svg {
+    float: right;
+    padding: 15px 10px 10px 0;
+}

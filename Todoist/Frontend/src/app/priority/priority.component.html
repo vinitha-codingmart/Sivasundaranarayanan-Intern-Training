@@ -1,0 +1,8 @@
+<div class="PriorityWrapper">
+    <div class="ProjectHeader">
+        <h1>{{title}}</h1>
+    </div>
+    <div *ngFor="let taskId of taskIds">
+        <app-task [taskId]="taskId"></app-task>
+    </div>
+</div>

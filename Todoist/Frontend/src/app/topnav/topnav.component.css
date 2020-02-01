@@ -1,0 +1,15 @@
+.topNav {
+    background-color: #DB4c3f;
+    height: 44px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.topNavWrapper {
+    position: relative;
+    width: 922px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}

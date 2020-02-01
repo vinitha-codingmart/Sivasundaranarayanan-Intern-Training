@@ -1,0 +1,12 @@
+.topIcons {
+    display: flex;
+    align-items: center;
+    right: 5%;
+    top: 25%;
+    position: absolute;
+}
+
+.Icons {
+    color: white;
+    padding: 0 .5rem;
+}

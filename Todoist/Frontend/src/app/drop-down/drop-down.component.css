@@ -1,0 +1,120 @@
+.DropDown {
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+}
+
+.DropDown:hover {
+    background-color: #f7f7f7;
+}
+
+.DropDownButton {
+    text-transform: capitalize;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 10px 50% 10px 0;
+    height: 24px;
+    color: #333;
+    box-sizing: content-box;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.DropDown svg {
+    padding: 0 5px;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.DropDown .down {
+    transition: all .1s ease-out;
+    transform: rotateZ(0deg);
+}
+
+.DropDown .up {
+    transition: all .1s ease-in;
+    transform: rotateZ(-90deg);
+}
+
+.DropDownButton~svg {
+    float: right;
+    padding: 15px 10px 10px 0;
+}
+
+.DropDownButton~svg:hover {
+    color: #212121;
+}
+
+.DropDown {
+    overflow: hidden;
+}
+
+.Dropdownlist {
+    height: auto;
+}
+
+.Dropdownlist .active {
+    background-color: #fff;
+    font-weight: 700;
+    color: #212121;
+}
+
+.show {
+    max-height: 200px;
+    transition: max-height .25s ease-in;
+}
+
+.hide {
+    max-height: 0;
+    transition: max-height .15s ease-out;
+}
+
+.DropDownListItem:hover {
+    background-color: #fff;
+}
+
+.DropDownListItem {
+    outline: none;
+    padding: 10px 0 10px 1rem;
+    align-items: center;
+    display: flex;
+    list-style: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.DropDownListItemIcon {
+    margin-right: 10px;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+}
+
+.AddDropDownListItem {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.AddDropDownListItem svg{
+    color: #DD4B39;
+    padding: 3px;
+    border-radius: 50%;
+}
+
+.AddDropDownListItem span {
+    padding-left: .75rem;
+    font-size: 14px;
+    color: gray;
+}
+
+.AddDropDownListItem:hover span{
+    color: #DD4B39;
+}
+
+.AddDropDownListItem:hover svg{
+    color: white;
+    background-color: #DD4B39;
+}

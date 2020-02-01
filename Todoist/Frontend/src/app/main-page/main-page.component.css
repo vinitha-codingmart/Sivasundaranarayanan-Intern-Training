@@ -1,0 +1,16 @@
+.mainPage {
+    display: flex;
+    flex-direction: row;
+}
+
+.mainPage {
+    display: flex;
+    flex-direction: column;
+}
+
+.mainContentWrapper {
+    width: 922px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+}
